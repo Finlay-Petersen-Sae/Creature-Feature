@@ -29,9 +29,9 @@ public class PerlinNoise : MonoBehaviour
     {
         Texture2D texture = new Texture2D(width, height);
 
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < width; x += 5)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < height; y += 5)
             {
                 xLoc = x;
                 zLoc = y;
@@ -56,9 +56,9 @@ public class PerlinNoise : MonoBehaviour
 
     void CoalatePerlinNoise()
     {
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < width; x+=5)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < height; y+=5)
             {
                 newNoise = Random.Range(0, 10000);
                 float xCoord = (float)x / width * scale + offsetX;
