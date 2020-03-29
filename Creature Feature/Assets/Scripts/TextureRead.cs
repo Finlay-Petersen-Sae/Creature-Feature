@@ -12,7 +12,7 @@ public class TextureRead : MonoBehaviour
     public Rect sourceRect;
 
     public Color[] pix;
-    public List<PathDataNode> PathData;
+    public List<PathDataNode> pathDataNodeList = new List<PathDataNode>();
 
     public Color startNodeColour;
     public Color endNodeColour;
@@ -67,27 +67,18 @@ public class TextureRead : MonoBehaviour
                     }
                     else if(pixelColour == highPriorityPassableColour)
                     {
-                        PathDataNode Node = new PathDataNode();
-                        Node.HighPriority = true;
-                        Node.worldLocation = transform.position;
-                        Node.gridLocation = new Vector2(xIndex, yIndex);
-                        PathData.Add(Node);
+                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), true, false, false);
+                        pathDataNodeList.Add(Node);
                     }
                     else if(pixelColour == lowPriorityPassableColour)
                     {
-                        PathDataNode Node = new PathDataNode();
-                        Node.LowPriority = true;
-                        Node.worldLocation = transform.position;
-                        Node.gridLocation = new Vector2(xIndex, yIndex);
-                        PathData.Add(Node);
+                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), false, true, false);
+                        pathDataNodeList.Add(Node);
                     }
                     else if(pixelColour == unpassableColour)
                     {
-                        PathDataNode Node = new PathDataNode();
-                        Node.Unpassable = true;
-                        Node.worldLocation = transform.position;
-                        Node.gridLocation = new Vector2(xIndex, yIndex);
-                        PathData.Add(Node); 
+                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), false, false, true);
+                        pathDataNodeList.Add(Node); 
                     }
                     //if(pixelColour = start)
                     //create node objects inbetween the start and end vector 2 and fill out the world map
