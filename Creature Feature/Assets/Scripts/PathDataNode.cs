@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PathDataNode
 {
-    //public enum NodeType
-    //{
-    //    HighPriority,
-    //    LowPriority,
-    //    UnPassable
-    //};
+    public enum NodeType
+    {
+        HighPriority,
+        LowPriority,
+        UnPassable
+    };
 
+    public NodeType type;
     // private List<PathDataEdges> edges = new List<PathDataEdges>();
 
     public bool HighPriority;
@@ -20,14 +21,12 @@ public class PathDataNode
     public Vector3 worldLocation;
     public Vector2 gridLocation;
 
-    public PathDataNode(Vector3 _worldLocation, Vector2 _gridLocation, bool _highPriority, bool _lowPriority, bool _unpassable)
+    public PathDataNode(Vector3 _worldLocation, Vector2 _gridLocation, NodeType _type)
     {
         worldLocation = _worldLocation;
         gridLocation = _gridLocation;
 
-        HighPriority = _highPriority;
-        LowPriority = _lowPriority;
-        Unpassable = _unpassable;
+        type = _type;
     }
 
 

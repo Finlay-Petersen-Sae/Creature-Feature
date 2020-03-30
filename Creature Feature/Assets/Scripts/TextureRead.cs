@@ -1,34 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 
 public class TextureRead : MonoBehaviour
 {
+    [Header("Markers")]
+    public Color startNodeColour;
+
+    public GameObject startNode;
+    public Color endNodeColour;
+    public GameObject endNode;
+
+    [Header("Camera Config")]
+    public Camera pathDataCam;
+
     public RenderTexture targetTexture;
     public Texture2D targetTexture2D;
+
+    [Header("Procgen")]
+    public Color[] pix;
+
     public Vector2 startPoint;
     public Vector2 endPoint;
     public Rect sourceRect;
-
-    public Color[] pix;
-    public List<PathDataNode> pathDataNodeList = new List<PathDataNode>();
-
-    public Color startNodeColour;
-    public Color endNodeColour;
     public Color highPriorityPassableColour;
     public Color lowPriorityPassableColour;
     public Color unpassableColour;
-    
-    int x;
-    int y;
-    int width;
-    int height;
+
+    public List<PathDataNode> pathDataNodeList = new List<PathDataNode>();
+
+    private int x;
+    private int y;
+    private int width;
+    private int height;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-       
         sourceRect.width = targetTexture.width;
         sourceRect.height = targetTexture.height;
         x = Mathf.FloorToInt(sourceRect.x);
@@ -36,12 +43,73 @@ public class TextureRead : MonoBehaviour
         width = Mathf.FloorToInt(sourceRect.width);
         height = Mathf.FloorToInt(sourceRect.height);
         targetTexture2D = new Texture2D(width, height);
+        Render();
+    }
+
+    private void Update()
+    {
     }
 
     // Update is called once per frame
-    void Update()
+    private void ProcGen()
     {
-       
+        if (targetTexture2D != null)
+        {
+            for (int yIndex = 0; yIndex < targetTexture2D.height; ++yIndex)
+            {
+                for (int xIndex = 0; xIndex < targetTexture2D.width; ++xIndex)
+                {
+                    int index = yIndex * targetTexture2D.width + xIndex;
+                    var pixelColour = pix[index];
+
+                    //Make the nodes attached to a particular object
+                    //spawn them
+                    //If the Local vector2's are not null continue through the loop.
+                    ////Make a pathdata manager start.
+                    //if(pixelColour == startNodeColour)
+                    //{
+                    //    startPoint = new Vector2(xIndex, yIndex);
+                    //}
+                    //else if(pixelColour == endNodeColour)
+                    //{
+                    //    endPoint = new Vector2(xIndex, yIndex);
+                    //}
+                    if (pixelColour == highPriorityPassableColour)
+                    {
+                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
+                        pathDataNodeList.Add(Node);
+                    }
+                    else if (pixelColour == lowPriorityPassableColour)
+                    {
+                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), PathDataNode.NodeType.LowPriority);
+                        pathDataNodeList.Add(Node);
+                    }
+                    else if (pixelColour == unpassableColour)
+                    {
+                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), PathDataNode.NodeType.UnPassable);
+                        pathDataNodeList.Add(Node);
+                    }
+                }
+            }
+        }
+    }
+
+    public void Render()
+    {
+        RenderTexture.active = targetTexture;
+
+        pathDataCam.Render();
+
+        targetTexture2D.ReadPixels(new Rect(0, 0, targetTexture.width, targetTexture.height), 0, 0);
+        targetTexture2D.SetPixels(pix);
+        targetTexture2D.Apply();
+        pix = targetTexture2D.GetPixels(x, y, width, height);
+
+        Vector3Int startNodeMarkerLoc = Vector3Int.zero;
+        Vector3Int endNodeMarkerLoc = Vector3Int.zero;
+
+        Color[] pixelData = targetTexture2D.GetPixels(0);
+        pix = pixelData;
         if (targetTexture2D != null)
         {
             for (int yIndex = 0; yIndex < targetTexture2D.height; ++yIndex)
@@ -50,55 +118,34 @@ public class TextureRead : MonoBehaviour
                 {
                     int index = yIndex * targetTexture2D.width + xIndex;
 
-                    
-
                     //Make the nodes attached to a particular object
                     //spawn them
                     //If the Local vector2's are not null continue through the loop.
                     //Make a pathdata manager start.
-                    var pixelColour = pix[index];
-                    if(pixelColour == startNodeColour)
+                    if (pixelData[index] == startNodeColour)
                     {
-                        startPoint = new Vector2(xIndex, yIndex);
+                        startNodeMarkerLoc.x = xIndex;
+                        startNodeMarkerLoc.z = yIndex;
                     }
-                    else if(pixelColour == endNodeColour)
+                    else if (pixelData[index] == endNodeColour)
                     {
-                        endPoint = new Vector2(xIndex, yIndex);
+                        endNodeMarkerLoc.x = xIndex;
+                        endNodeMarkerLoc.z = yIndex;
                     }
-                    else if(pixelColour == highPriorityPassableColour)
-                    {
-                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), true, false, false);
-                        pathDataNodeList.Add(Node);
-                    }
-                    else if(pixelColour == lowPriorityPassableColour)
-                    {
-                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), false, true, false);
-                        pathDataNodeList.Add(Node);
-                    }
-                    else if(pixelColour == unpassableColour)
-                    {
-                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), false, false, true);
-                        pathDataNodeList.Add(Node); 
-                    }
-                    //if(pixelColour = start)
-                    //create node objects inbetween the start and end vector 2 and fill out the world map
-                    //create it based on colours
-                    //TODO make a variable for colours that make different nodes, blockable, unprioritised that sort of stuff
-
-                    // logic then goes here for creating different nodes based on the colour
                 }
             }
-        
         }
-    }
+        Vector3 pixelToWorldScale = startNode.transform.position - endNode.transform.position;
+        pixelToWorldScale.y = 0;
+        pixelToWorldScale.x /= (startNodeMarkerLoc.x - endNodeMarkerLoc.x);
+        pixelToWorldScale.z /= (startNodeMarkerLoc.z - endNodeMarkerLoc.z);
 
-    private void OnPostRender()
-    {
-      
-        targetTexture2D.ReadPixels(new Rect(0, 0, targetTexture.width, targetTexture.height), 0, 0);
-        targetTexture2D.SetPixels(pix);
-        targetTexture2D.Apply();
-        pix = targetTexture2D.GetPixels(x, y, width, height);
+        Debug.Log("pixel to world scale is " + pixelToWorldScale);
 
+        Vector3 spawnPoint = endNode.transform.position;
+        spawnPoint.x += (pixelToWorldScale.x - endNodeMarkerLoc.x) * 10;
+        spawnPoint.z += (pixelToWorldScale.z - endNodeMarkerLoc.z) * 5;
+        GameObject newObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        newObject.transform.position = spawnPoint;
     }
 }

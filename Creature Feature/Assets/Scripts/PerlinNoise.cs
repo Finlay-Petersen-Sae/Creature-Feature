@@ -6,7 +6,7 @@ public class PerlinNoise : MonoBehaviour
 {
 
     public int width = 256, height = 256;
-    public float scale = 20, offsetX = 100f, offsetY = 100f, xLoc, zLoc;
+    public float scale = 20, offsetX = 100f, offsetY = 100f, xLoc, zLoc, hypotenuse = 14.142f;
     int newNoise;
     public GameObject[] SpawnableTiles;
     Renderer renderer;
@@ -16,6 +16,7 @@ public class PerlinNoise : MonoBehaviour
         renderer = GetComponent<Renderer>();
         renderer.material.mainTexture = GenerateTexture();
         //CoalatePerlinNoise();
+
     }
 
     private void Update()
@@ -72,6 +73,8 @@ public class PerlinNoise : MonoBehaviour
 
     void Generation(float noiseSample, float rNumber)
     {
+        float spawnLocx = xLoc - hypotenuse;
+        float spawnLocz = zLoc - hypotenuse;
         int caseSwitch = 0;
         Debug.Log("rnumber = " + rNumber);
         if (noiseSample <= 0.25)
@@ -101,50 +104,50 @@ public class PerlinNoise : MonoBehaviour
                 if(rNumber <= 1)
                 {
                     Debug.Log("house case 1");
-                    Instantiate(SpawnableTiles[0], new Vector3(xLoc, 0, zLoc), Quaternion.identity);
+                    Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 1 && rNumber <= 2)
                 {
                     Debug.Log("high rise case 1");
-                    Instantiate(SpawnableTiles[1], new Vector3(xLoc, 0, zLoc), Quaternion.identity);
+                    Instantiate(SpawnableTiles[1], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if(rNumber > 2)
                 {
-                    Instantiate(SpawnableTiles[2], new Vector3(xLoc, 0, zLoc), Quaternion.identity);
+                    Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 break;
             case 2:
                 if (rNumber <= 0.25)
                 {
                     Debug.Log("house case 2");
-                    Instantiate(SpawnableTiles[0], new Vector3(xLoc, 0, zLoc), Quaternion.identity);
+                    Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 0.25 && rNumber <= 0.85)
                 {
                     Debug.Log("high rise case 2");
-                    Instantiate(SpawnableTiles[1], new Vector3(xLoc, 0, zLoc), Quaternion.identity);
+                    Instantiate(SpawnableTiles[1], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 0.85)
                 {
                     Debug.Log("resturant case 2");
-                    Instantiate(SpawnableTiles[2], new Vector3(xLoc, 0, zLoc), Quaternion.identity);
+                    Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 break;
             case 3:
                 if (rNumber <= 0.25)
                 {
                     Debug.Log("house case 3");
-                    Instantiate(SpawnableTiles[0], new Vector3(xLoc, 0, zLoc), Quaternion.identity);
+                    Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 0.25 && rNumber <= 0.85)
                 {
                     Debug.Log("high rise case 3");
-                    Instantiate(SpawnableTiles[1], new Vector3(xLoc, 0, zLoc), Quaternion.identity);
+                    Instantiate(SpawnableTiles[1], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 0.85)
                 {
                     Debug.Log("resturant case 3");
-                    Instantiate(SpawnableTiles[2], new Vector3(xLoc, 0, zLoc), Quaternion.identity);
+                    Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 break;
         }

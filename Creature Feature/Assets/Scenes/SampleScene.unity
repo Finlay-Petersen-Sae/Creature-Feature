@@ -229,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.037552062, y: -0, z: -0, w: 0.9992947}
-  m_LocalPosition: {x: 3.77, y: 1.29, z: -6.76}
+  m_LocalPosition: {x: -9.35, y: 2.51, z: -22.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -262,8 +262,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013528309}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18, y: 0, z: 18}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -19, y: -1.5, z: 19}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 638046274}
   m_RootOrder: 0
@@ -354,8 +354,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261347265}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 0, z: -20}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 21, y: -1.5, z: -21}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 638046274}
   m_RootOrder: 1
@@ -429,7 +429,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1290053702}
   - component: {fileID: 1290053701}
-  - component: {fileID: 1290053700}
   - component: {fileID: 1290053703}
   m_Layer: 0
   m_Name: PathData Cam
@@ -438,14 +437,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1290053700
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1290053699}
-  m_Enabled: 1
 --- !u!20 &1290053701
 Camera:
   m_ObjectHideFlags: 0
@@ -473,7 +464,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 21
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -482,8 +473,8 @@ Camera:
   m_TargetTexture: {fileID: 8400000, guid: ea055b83f4a0e504a95bed1a7e74d19f, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -496,13 +487,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290053699}
-  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 14.36, z: 0}
   m_LocalScale: {x: 2.2897, y: 3.2342014, z: 2.2897}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1290053703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,8 +506,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd8503385399bf47aa0b9dae8cb856e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startNodeColour: {r: 0.5372549, g: 1, b: 0, a: 1}
+  startNode: {fileID: 1013528309}
+  endNodeColour: {r: 1, g: 0, b: 0.81568635, a: 1}
+  endNode: {fileID: 1261347265}
+  pathDataCam: {fileID: 1290053701}
   targetTexture: {fileID: 8400000, guid: ea055b83f4a0e504a95bed1a7e74d19f, type: 2}
   targetTexture2D: {fileID: 0}
+  pix: []
   startPoint: {x: 0, y: 0}
   endPoint: {x: 0, y: 0}
   sourceRect:
@@ -525,9 +522,6 @@ MonoBehaviour:
     y: 0
     width: 0
     height: 0
-  pix: []
-  startNodeColour: {r: 1, g: 0, b: 0.81568635, a: 1}
-  endNodeColour: {r: 0.5372549, g: 1, b: 0, a: 1}
   highPriorityPassableColour: {r: 0, g: 0.10196079, b: 1, a: 1}
   lowPriorityPassableColour: {r: 1, g: 0.9490197, b: 0, a: 1}
   unpassableColour: {r: 1, g: 0, b: 0, a: 1}
@@ -569,6 +563,7 @@ MonoBehaviour:
   offsetY: 100
   xLoc: 0
   zLoc: 0
+  hypotenuse: 17.5
   SpawnableTiles:
   - {fileID: 3214592643895433444, guid: c545f70fb910e6f44b0892a57d87a7d4, type: 3}
   - {fileID: 1381486343720905241, guid: 24579d86071d7f8488b72040fc810386, type: 3}
@@ -720,7 +715,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552605482}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.28, y: 2.18, z: -3.19}
+  m_LocalPosition: {x: -14.29, y: 2.18, z: -20.42}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
