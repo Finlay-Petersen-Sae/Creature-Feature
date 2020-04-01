@@ -11,11 +11,17 @@ public class PerlinNoise : MonoBehaviour
     public GameObject[] SpawnableTiles;
     Renderer renderer;
 
+    private void Awake()
+    {
+        GenerateTexture();
+    }
+
     private void Start()
     {
         renderer = GetComponent<Renderer>();
         renderer.material.mainTexture = GenerateTexture();
         //CoalatePerlinNoise();
+    
 
     }
 

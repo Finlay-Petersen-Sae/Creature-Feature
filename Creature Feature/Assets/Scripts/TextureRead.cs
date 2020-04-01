@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class TextureRead : MonoBehaviour
 {
+    [Header("Debug")]
+    public bool drawGizmos;
+
     [Header("Markers")]
     public Color startNodeColour;
 
@@ -21,12 +24,16 @@ public class TextureRead : MonoBehaviour
 
     public Vector2 startPoint;
     public Vector2 endPoint;
+    public Vector3 pixelToWorldScale;
+    public Vector3Int startNodeMarkerLoc;
+    public Vector3Int endNodeMarkerLoc;
     public Rect sourceRect;
     public Color highPriorityPassableColour;
     public Color lowPriorityPassableColour;
     public Color unpassableColour;
 
     public List<PathDataNode> pathDataNodeList = new List<PathDataNode>();
+    public PathDataManager pathDataManager;
 
     private int x;
     private int y;
@@ -43,11 +50,18 @@ public class TextureRead : MonoBehaviour
         width = Mathf.FloorToInt(sourceRect.width);
         height = Mathf.FloorToInt(sourceRect.height);
         targetTexture2D = new Texture2D(width, height);
+        startNodeMarkerLoc = Vector3Int.zero;
+        endNodeMarkerLoc = Vector3Int.zero;
+        pathDataManager = FindObjectOfType<PathDataManager>();
         Render();
     }
 
     private void Update()
     {
+        ProcGen();
+
+        //NodeGizmos();
+        
     }
 
     // Update is called once per frame
@@ -76,21 +90,31 @@ public class TextureRead : MonoBehaviour
                     //}
                     if (pixelColour == highPriorityPassableColour)
                     {
-                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
+                        Vector3 spawnPoint = startNode.transform.position;
+                        spawnPoint.x += (xIndex - pixelToWorldScale.x - startNodeMarkerLoc.x);
+                        spawnPoint.z += (yIndex - pixelToWorldScale.z - startNodeMarkerLoc.z);
+                        PathDataNode Node = new PathDataNode(spawnPoint, new Vector2(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
                         pathDataNodeList.Add(Node);
                     }
                     else if (pixelColour == lowPriorityPassableColour)
                     {
-                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), PathDataNode.NodeType.LowPriority);
+                        Vector3 spawnPoint = startNode.transform.position;
+                        spawnPoint.x += (xIndex - pixelToWorldScale.x - startNodeMarkerLoc.x);
+                        spawnPoint.z += (yIndex - pixelToWorldScale.z - startNodeMarkerLoc.z);
+                        PathDataNode Node = new PathDataNode(spawnPoint, new Vector2(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
                         pathDataNodeList.Add(Node);
                     }
                     else if (pixelColour == unpassableColour)
                     {
-                        PathDataNode Node = new PathDataNode(transform.position, new Vector2(xIndex, yIndex), PathDataNode.NodeType.UnPassable);
+                        Vector3 spawnPoint = startNode.transform.position;
+                        spawnPoint.x += (xIndex - pixelToWorldScale.x - startNodeMarkerLoc.x);
+                        spawnPoint.z += (yIndex - pixelToWorldScale.z - startNodeMarkerLoc.z);
+                        PathDataNode Node = new PathDataNode(spawnPoint, new Vector2(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
                         pathDataNodeList.Add(Node);
                     }
                 }
             }
+            pathDataManager.pathDataList = pathDataNodeList;
         }
     }
 
@@ -105,8 +129,7 @@ public class TextureRead : MonoBehaviour
         targetTexture2D.Apply();
         pix = targetTexture2D.GetPixels(x, y, width, height);
 
-        Vector3Int startNodeMarkerLoc = Vector3Int.zero;
-        Vector3Int endNodeMarkerLoc = Vector3Int.zero;
+   
 
         Color[] pixelData = targetTexture2D.GetPixels(0);
         pix = pixelData;
@@ -135,17 +158,28 @@ public class TextureRead : MonoBehaviour
                 }
             }
         }
-        Vector3 pixelToWorldScale = startNode.transform.position - endNode.transform.position;
+        pixelToWorldScale = startNode.transform.position - endNode.transform.position;
+
+        pixelToWorldScale.x /= (endNodeMarkerLoc.x - startNodeMarkerLoc.x);
+        pixelToWorldScale.z /= (endNodeMarkerLoc.z - startNodeMarkerLoc.z);
         pixelToWorldScale.y = 0;
-        pixelToWorldScale.x /= (startNodeMarkerLoc.x - endNodeMarkerLoc.x);
-        pixelToWorldScale.z /= (startNodeMarkerLoc.z - endNodeMarkerLoc.z);
 
         Debug.Log("pixel to world scale is " + pixelToWorldScale);
 
-        Vector3 spawnPoint = endNode.transform.position;
-        spawnPoint.x += (pixelToWorldScale.x - endNodeMarkerLoc.x) * 10;
-        spawnPoint.z += (pixelToWorldScale.z - endNodeMarkerLoc.z) * 5;
-        GameObject newObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        newObject.transform.position = spawnPoint;
+        //Vector3 spawnPoint = startNode.transform.position;
+        //spawnPoint.x += (15 - pixelToWorldScale.x - startNodeMarkerLoc.x);
+        //spawnPoint.z += (15 - pixelToWorldScale.z - startNodeMarkerLoc.z);
+        //GameObject newObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //newObject.transform.position = spawnPoint;
+
+
     }
+
+//    private void NodeGizmos()
+//    {
+//        foreach (var PathDataNode in pathDataNodeList)
+//        {
+//            Debug.DrawRay(PathDataNode.worldLocation, Vector3.up, Color.magenta);
+//        }
+//    }
 }
