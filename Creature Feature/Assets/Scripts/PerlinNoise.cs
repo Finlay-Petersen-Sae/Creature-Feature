@@ -72,7 +72,6 @@ public class PerlinNoise : MonoBehaviour
                 float yCoord = (float)y / height * scale + offsetY;
 
                 float sample = Mathf.PerlinNoise(xCoord + newNoise, yCoord + newNoise);
-                Debug.Log("The perlin noise value in this area is " + sample);
             }
         }
     }
@@ -82,20 +81,16 @@ public class PerlinNoise : MonoBehaviour
         float spawnLocx = xLoc - hypotenuse;
         float spawnLocz = zLoc - hypotenuse;
         int caseSwitch = 0;
-        Debug.Log("rnumber = " + rNumber);
         if (noiseSample <= 0.25)
         {
-            Debug.Log("Should move to case 1 for generation");
             caseSwitch = 1;
         }
         else if(noiseSample > 0.25 && noiseSample <= 0.75)
         {
-            Debug.Log("Should move to case 2 for generation");
             caseSwitch = 2;
         }
         else if(noiseSample > 0.75)
         {
-            Debug.Log("Should move to case 3 for generation");
             caseSwitch = 3;
         }
         else
@@ -109,12 +104,10 @@ public class PerlinNoise : MonoBehaviour
             case 1:
                 if(rNumber <= 1)
                 {
-                    Debug.Log("house case 1");
                     Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 1 && rNumber <= 2)
                 {
-                    Debug.Log("high rise case 1");
                     Instantiate(SpawnableTiles[1], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if(rNumber > 2)
@@ -125,34 +118,28 @@ public class PerlinNoise : MonoBehaviour
             case 2:
                 if (rNumber <= 0.25)
                 {
-                    Debug.Log("house case 2");
                     Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 0.25 && rNumber <= 0.85)
                 {
-                    Debug.Log("high rise case 2");
                     Instantiate(SpawnableTiles[1], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 0.85)
                 {
-                    Debug.Log("resturant case 2");
                     Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 break;
             case 3:
                 if (rNumber <= 0.25)
                 {
-                    Debug.Log("house case 3");
                     Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 0.25 && rNumber <= 0.85)
                 {
-                    Debug.Log("high rise case 3");
                     Instantiate(SpawnableTiles[1], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 else if (rNumber > 0.85)
                 {
-                    Debug.Log("resturant case 3");
                     Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 break;

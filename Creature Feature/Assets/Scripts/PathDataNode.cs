@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathDataNode
+public class PathDataNode : IEquatable<PathDataNode>
 {
     public enum NodeType
     {
@@ -19,9 +20,9 @@ public class PathDataNode
     public bool Unpassable;
 
     public Vector3 worldLocation;
-    public Vector2 gridLocation;
+    public Vector2Int gridLocation;
 
-    public PathDataNode(Vector3 _worldLocation, Vector2 _gridLocation, NodeType _type)
+    public PathDataNode(Vector3 _worldLocation, Vector2Int _gridLocation, NodeType _type)
     {
         worldLocation = _worldLocation;
         gridLocation = _gridLocation;
@@ -29,5 +30,29 @@ public class PathDataNode
         type = _type;
     }
 
+    public override bool Equals(object obj)
+    {
+        return Equals(obj as PathDataNode);
+    }
 
+    public bool Equals(PathDataNode other)
+    {
+        return other != null &&
+               gridLocation.Equals(other.gridLocation);
+    }
+
+    public override int GetHashCode()
+    {
+        return 1117241146 + EqualityComparer<Vector2>.Default.GetHashCode(gridLocation);
+    }
+
+    public static bool operator ==(PathDataNode node1, PathDataNode node2)
+    {
+        return EqualityComparer<PathDataNode>.Default.Equals(node1, node2);
+    }
+
+    public static bool operator !=(PathDataNode node1, PathDataNode node2)
+    {
+        return !(node1 == node2);
+    }
 }

@@ -5,15 +5,22 @@ using UnityEngine;
 public class PathDataManager : MonoBehaviour
 {
     public List<PathDataNode> pathDataList = new List<PathDataNode>();
+    public Vector2Int WorldSize;
 
-    public PathDataNode GetNode(Vector2 _checkLoc)
+    public PathDataNode GetNode(Vector2Int _checkLoc)
     {
-        PathDataNode desiredNode = null;
-        foreach (var Node in pathDataList)
+        int index = _checkLoc.y * WorldSize.x + _checkLoc.x;
+
+        if(index < 0 || index > 1442)
         {
-            if (Node.gridLocation == _checkLoc)
-                desiredNode = Node;
+            Debug.LogError("index is outside of array" + index);
+            return null;
         }
-        return desiredNode;
+
+        if (_checkLoc.x < 0 || _checkLoc.y < 0 || _checkLoc.x >= WorldSize.x || _checkLoc.y >= WorldSize.y)
+        {
+            return null;
+        }
+        return pathDataList[index];
     }
 }

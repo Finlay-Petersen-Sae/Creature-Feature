@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PathFinding : MonoBehaviour
 {
     [Header("PathData Inputs")]
     private PathDataManager PDM;
+
+    public List<PathFindingNode> Path = new List<PathFindingNode>();
     public List<PathFindingNode> openList = new List<PathFindingNode>();
     public List<PathFindingNode> closedList = new List<PathFindingNode>();
     public PathFindingNode startNode;
@@ -13,31 +14,40 @@ public class PathFinding : MonoBehaviour
     public Vector3 start, end;
 
     public int iterationCount;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         PDM = FindObjectOfType<PathDataManager>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(openList.Count != 0)
+        if (openList.Count != 0)
         {
+            DrawPathFindData(Path);
             DrawPathFindData(openList);
             Debug.DrawRay(start, Vector3.up * 100, Color.cyan);
             Debug.DrawRay(end, Vector3.up * 100, Color.green);
-
-        } 
+        }
     }
 
     public void PathMake()
     {
         var pathNode1 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count + 1)], 0, 0);
         var pathNode2 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count + 1)], 0, 0);
-        PathFind(pathNode1, pathNode2);
-        
+        if (pathNode1.Node.type == PathDataNode.NodeType.UnPassable)
+        {
+            pathNode1 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count + 1)], 0, 0);
+        }
+        if (pathNode2.Node.type == PathDataNode.NodeType.UnPassable)
+        {
+            pathNode2 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count + 1)], 0, 0);
+        }
+        Path = PathFind(pathNode1, pathNode2);
     }
+
     public float calculateHCost(Vector3 _Start, Vector3 _End)
     {
         var hcost = Vector3.Distance(_Start, _End);
@@ -73,11 +83,10 @@ public class PathFinding : MonoBehaviour
                 PathFindingNode bestNode = openList[0];
                 foreach (var pathNode in openList)
                 {
-                    if(pathNode.gCost + pathNode.hCost < bestNode.gCost + bestNode.hCost)
+                    if (pathNode.gCost + pathNode.hCost < bestNode.gCost + bestNode.hCost)
                     {
                         bestNode = pathNode;
                     }
-                    
                 }
                 if (bestNode != null)
                 {
@@ -87,14 +96,14 @@ public class PathFinding : MonoBehaviour
                 if (bestNode == endNode)
                 {
                     var currentNode = bestNode;
-                    if (currentNode.parentNode != null)
+                    while (currentNode.parentNode != null)
                     {
                         Path.Add(currentNode);
                         currentNode = currentNode.parentNode;
                     }
                     Debug.Log("Iterations was " + iterationCount);
                     Debug.Log("Path was" + Path);
-                    
+
                     Path.Reverse();
 
                     return Path;
@@ -105,7 +114,7 @@ public class PathFinding : MonoBehaviour
                     if (!openList.Contains(neighbour))
                     {
                         neighbour.gCost = bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, neighbour.Node.worldLocation);
-                        neighbour.hCost = calculateHCost(bestNode.Node.worldLocation, neighbour.Node.worldLocation);
+                        neighbour.hCost = calculateHCost(neighbour.Node.worldLocation, endNode.Node.worldLocation);
                         neighbour.parentNode = bestNode;
                         openList.Add(neighbour);
                     }
@@ -119,26 +128,23 @@ public class PathFinding : MonoBehaviour
                         }
                     }
                 }
-              
             }
-           
         }
-        //  return Path;
+        //return Path;
 
         return (openList);
-
     }
 
     public List<PathFindingNode> CheckNeighbours(List<PathFindingNode> _openList, List<PathFindingNode> _closedList, PathFindingNode bestNode)
     {
-        var west = new Vector2(-1, 0);
-        var east = new Vector2(1, 0);
-        var north = new Vector2(0, -1);
-        var south = new Vector2(0, 1);
-        var northwest = new Vector2(-1, 1);
-        var northeast = new Vector2(1, 1);
-        var southwest = new Vector2(-1, -1);
-        var southeast = new Vector2(1, -1);
+        var west = new Vector2Int(-1, 0);
+        var east = new Vector2Int(1, 0);
+        var north = new Vector2Int(0, -1);
+        var south = new Vector2Int(0, 1);
+        var northwest = new Vector2Int(-1, 1);
+        var northeast = new Vector2Int(1, 1);
+        var southwest = new Vector2Int(-1, -1);
+        var southeast = new Vector2Int(1, -1);
         List<PathFindingNode> neighbourList = new List<PathFindingNode>();
 
         var pathdata = PDM;
@@ -146,98 +152,133 @@ public class PathFinding : MonoBehaviour
         var nodeWest = PDM.GetNode(bestNode.Node.gridLocation + west);
         if (nodeWest != null)
         {
-            ClosedListCheck(closedList, nodeWest);
-            OpenListCheck(openList, nodeWest, neighbourList);
-            var Node = new PathFindingNode(nodeWest, bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, nodeWest.worldLocation), calculateHCost(bestNode.Node.worldLocation, nodeWest.worldLocation));
-            neighbourList.Add(Node);
+            if (!ClosedListCheck(closedList, nodeWest))
+            {
+                if (!OpenListCheck(openList, nodeWest, neighbourList))
+                {
+                    var Node = new PathFindingNode(nodeWest, 0, 0);
+                    neighbourList.Add(Node);
+                }
+            }
         }
         var nodeEast = PDM.GetNode(bestNode.Node.gridLocation + east);
         if (nodeEast != null)
         {
-            ClosedListCheck(closedList, nodeEast);
-            OpenListCheck(openList, nodeEast, neighbourList);
-            var Node = new PathFindingNode(nodeEast, bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, nodeEast.worldLocation), calculateHCost(bestNode.Node.worldLocation, nodeEast.worldLocation));
-            neighbourList.Add(Node);
+            if (!ClosedListCheck(closedList, nodeEast))
+            {
+                if (!OpenListCheck(openList, nodeEast, neighbourList))
+                {
+                    var Node = new PathFindingNode(nodeEast, 0, 0);
+                    neighbourList.Add(Node);
+                }
+            }
         }
         var nodeNorth = PDM.GetNode(bestNode.Node.gridLocation + north);
         if (nodeNorth != null)
         {
-            ClosedListCheck(closedList, nodeNorth);
-            OpenListCheck(openList, nodeNorth, neighbourList);
-            var Node = new PathFindingNode(nodeNorth, bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, nodeNorth.worldLocation), calculateHCost(bestNode.Node.worldLocation, nodeNorth.worldLocation));
-            neighbourList.Add(Node);
+            if (!ClosedListCheck(closedList, nodeNorth))
+            {
+                if (!OpenListCheck(openList, nodeNorth, neighbourList))
+                {
+                    var Node = new PathFindingNode(nodeNorth, 0, 0);
+                    neighbourList.Add(Node);
+                }
+            }
         }
         var nodeSouth = PDM.GetNode(bestNode.Node.gridLocation + south);
         if (nodeSouth != null)
         {
-            ClosedListCheck(closedList, nodeSouth);
-            OpenListCheck(openList, nodeSouth, neighbourList);
-            var Node = new PathFindingNode(nodeSouth, bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, nodeSouth.worldLocation), calculateHCost(bestNode.Node.worldLocation, nodeSouth.worldLocation));
-            neighbourList.Add(Node);
+            if (!ClosedListCheck(closedList, nodeSouth))
+            {
+                if (!OpenListCheck(openList, nodeSouth, neighbourList))
+                {
+                    var Node = new PathFindingNode(nodeSouth, 0, 0);
+                    neighbourList.Add(Node);
+                }
+            }
         }
         var nodeNorthWest = PDM.GetNode(bestNode.Node.gridLocation + northwest);
         if (nodeNorthWest != null)
         {
-            ClosedListCheck(closedList, nodeNorthWest);
-            OpenListCheck(openList, nodeNorthWest, neighbourList);
-            var Node = new PathFindingNode(nodeNorthWest, bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, nodeNorthWest.worldLocation), calculateHCost(bestNode.Node.worldLocation, nodeNorthWest.worldLocation));
-            neighbourList.Add(Node);
+            if (!ClosedListCheck(closedList, nodeNorthWest))
+            {
+                if (!OpenListCheck(openList, nodeNorthWest, neighbourList))
+                {
+                    var Node = new PathFindingNode(nodeNorthWest, 0, 0);
+                    neighbourList.Add(Node);
+                }
+            }
         }
         var nodeNorthEast = PDM.GetNode(bestNode.Node.gridLocation + northeast);
         if (nodeNorthEast != null)
         {
-            ClosedListCheck(closedList, nodeNorthEast);
-            OpenListCheck(openList, nodeNorthEast, neighbourList);
-            var Node = new PathFindingNode(nodeNorthEast, bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, nodeNorthEast.worldLocation), calculateHCost(bestNode.Node.worldLocation, nodeNorthEast.worldLocation));
-            neighbourList.Add(Node);
+            if (!ClosedListCheck(closedList, nodeNorthEast))
+            {
+                if (!OpenListCheck(openList, nodeNorthEast, neighbourList))
+                {
+                    var Node = new PathFindingNode(nodeNorthEast, 0, 0);
+                    neighbourList.Add(Node);
+                }
+            }
         }
         var nodeSouthWest = PDM.GetNode(bestNode.Node.gridLocation + southwest);
         if (nodeSouthWest != null)
         {
-            ClosedListCheck(closedList, nodeSouthWest);
-            OpenListCheck(openList, nodeSouthWest, neighbourList);
-            var Node = new PathFindingNode(nodeSouthWest, bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, nodeSouthWest.worldLocation), calculateHCost(bestNode.Node.worldLocation, nodeSouthWest.worldLocation));
-            neighbourList.Add(Node);
+            if (!ClosedListCheck(closedList, nodeSouthWest))
+            {
+                if (!OpenListCheck(openList, nodeSouthWest, neighbourList))
+                {
+                    var Node = new PathFindingNode(nodeSouthWest, 0, 0);
+                    neighbourList.Add(Node);
+                }
+            }
         }
         var nodeSouthEast = PDM.GetNode(bestNode.Node.gridLocation + southeast);
         if (nodeSouthEast != null)
         {
-            ClosedListCheck(closedList, nodeSouthEast);
-            OpenListCheck(openList, nodeSouthEast, neighbourList);
-            var Node = new PathFindingNode(nodeSouthEast, bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, nodeSouthEast.worldLocation), calculateHCost(bestNode.Node.worldLocation, nodeSouthEast.worldLocation));
-            neighbourList.Add(Node);
+            if (!ClosedListCheck(closedList, nodeSouthEast))
+            {
+                if (!OpenListCheck(openList, nodeSouthEast, neighbourList))
+                {
+                    var Node = new PathFindingNode(nodeSouthEast, 0, 0);
+                    neighbourList.Add(Node);
+                }
+            }
         }
 
-            return neighbourList;
+        return neighbourList;
     }
 
-    public void OpenListCheck(List<PathFindingNode> openlist, PathDataNode checkNode, List<PathFindingNode> Neighbours)
+    public bool OpenListCheck(List<PathFindingNode> openlist, PathDataNode checkNode, List<PathFindingNode> Neighbours)
     {
-        foreach(var node in openlist)
+        foreach (var node in openlist)
         {
             if (checkNode == node.Node)
             {
                 Neighbours.Add(node);
-                break;
+                return true;
             }
         }
+        return false;
     }
-    public void ClosedListCheck(List<PathFindingNode> closedlist, PathDataNode checkNode)
+
+    public bool ClosedListCheck(List<PathFindingNode> closedlist, PathDataNode checkNode)
     {
         foreach (var node in closedlist)
         {
             if (checkNode == node.Node)
             {
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     private void DrawPathFindData(List<PathFindingNode> Pathdata)
     {
         foreach (var Node in Pathdata)
         {
-            Debug.DrawRay(Node.Node.worldLocation, Vector3.up, Color.magenta);
+            Debug.DrawRay(Node.Node.worldLocation, Vector3.up * 5, Color.magenta);
         }
     }
 }
