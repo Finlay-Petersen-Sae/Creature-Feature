@@ -66,7 +66,7 @@ public class TextureRead : MonoBehaviour
     {
 
 
-        //NodeGizmos();
+        NodeGizmos();
         
     }
 
@@ -97,24 +97,24 @@ public class TextureRead : MonoBehaviour
                     if (pixelColour == highPriorityPassableColour)
                     {
                         Vector3 spawnPoint = startNode.transform.position;
-                        spawnPoint.x += (xIndex - pixelToWorldScale.x - startNodeMarkerLoc.x);
-                        spawnPoint.z += (yIndex - pixelToWorldScale.z - startNodeMarkerLoc.z);
+                        spawnPoint.x += (xIndex - startNodeMarkerLoc.x) - pixelToWorldScale.x;
+                        spawnPoint.z += (yIndex - startNodeMarkerLoc.z) - pixelToWorldScale.z;
                         PathDataNode Node = new PathDataNode(spawnPoint, new Vector2Int(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
                         pathDataNodeList.Add(Node);
                     }
                     else if (pixelColour == lowPriorityPassableColour)
                     {
                         Vector3 spawnPoint = startNode.transform.position;
-                        spawnPoint.x += (xIndex - pixelToWorldScale.x - startNodeMarkerLoc.x);
-                        spawnPoint.z += (yIndex - pixelToWorldScale.z - startNodeMarkerLoc.z);
+                        spawnPoint.x += (xIndex - startNodeMarkerLoc.x) - pixelToWorldScale.x;
+                        spawnPoint.z += (yIndex - startNodeMarkerLoc.z) - pixelToWorldScale.z;
                         PathDataNode Node = new PathDataNode(spawnPoint, new Vector2Int(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
                         pathDataNodeList.Add(Node);
                     }
                     else if (pixelColour == unpassableColour)
                     {
                         Vector3 spawnPoint = startNode.transform.position;
-                        spawnPoint.x += (xIndex - pixelToWorldScale.x - startNodeMarkerLoc.x);
-                        spawnPoint.z += (yIndex - pixelToWorldScale.z - startNodeMarkerLoc.z);
+                        spawnPoint.x += (xIndex - startNodeMarkerLoc.x) - pixelToWorldScale.x;
+                        spawnPoint.z += (yIndex - startNodeMarkerLoc.z) - pixelToWorldScale.z;
                         PathDataNode Node = new PathDataNode(spawnPoint, new Vector2Int(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
                         pathDataNodeList.Add(Node);
                     }

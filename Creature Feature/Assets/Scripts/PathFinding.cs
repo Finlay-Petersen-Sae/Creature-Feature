@@ -35,16 +35,9 @@ public class PathFinding : MonoBehaviour
 
     public void PathMake()
     {
-        var pathNode1 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count + 1)], 0, 0);
-        var pathNode2 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count + 1)], 0, 0);
-        if (pathNode1.Node.type == PathDataNode.NodeType.UnPassable)
-        {
-            pathNode1 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count + 1)], 0, 0);
-        }
-        if (pathNode2.Node.type == PathDataNode.NodeType.UnPassable)
-        {
-            pathNode2 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count + 1)], 0, 0);
-        }
+        var pathNode1 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count)], 0, 0);
+        var pathNode2 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count)], 0, 0);
+      
         Path = PathFind(pathNode1, pathNode2);
     }
 
