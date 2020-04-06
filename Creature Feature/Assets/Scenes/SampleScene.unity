@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.3587269, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 1013528312}
   - component: {fileID: 1013528311}
   m_Layer: 8
-  m_Name: Cube
+  m_Name: Top Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 1261347268}
   - component: {fileID: 1261347267}
   m_Layer: 8
-  m_Name: Cube (2)
+  m_Name: Bottom Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -633,10 +633,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawGizmos: 0
-  startNodeColour: {r: 0.5372549, g: 1, b: 0, a: 1}
-  startNode: {fileID: 1013528309}
-  endNodeColour: {r: 1, g: 0, b: 0.81568635, a: 1}
-  endNode: {fileID: 1261347265}
+  startNodeColour: {r: 1, g: 0, b: 0.8156863, a: 1}
+  startNode: {fileID: 1261347265}
+  endNodeColour: {r: 0.5372549, g: 1, b: 0, a: 1}
+  endNode: {fileID: 1013528309}
   pathDataCam: {fileID: 1290053701}
   targetTexture: {fileID: 8400000, guid: ea055b83f4a0e504a95bed1a7e74d19f, type: 2}
   targetTexture2D: {fileID: 0}

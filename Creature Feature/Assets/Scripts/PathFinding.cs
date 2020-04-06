@@ -64,68 +64,65 @@ public class PathFinding : MonoBehaviour
         var thresholdLimit = 1600;
         iterationCount = 0;
         List<PathFindingNode> Path = new List<PathFindingNode>();
-        while (iterationCount < thresholdLimit)
+        while (openList.Count > 0)
         {
             iterationCount++;
             if (iterationCount > thresholdLimit)
             {
                 break;
             }
-            else
+            
+            PathFindingNode bestNode = openList[0];
+            foreach (var pathNode in openList)
             {
-                PathFindingNode bestNode = openList[0];
-                foreach (var pathNode in openList)
+                if (pathNode.gCost + pathNode.hCost < bestNode.gCost + bestNode.hCost)
                 {
-                    if (pathNode.gCost + pathNode.hCost < bestNode.gCost + bestNode.hCost)
-                    {
-                        bestNode = pathNode;
-                    }
+                    bestNode = pathNode;
                 }
-                if (bestNode != null)
+            }
+            if (bestNode != null)
+            {
+                openList.Remove(bestNode);
+                closedList.Add(bestNode);
+            }
+            if (bestNode == endNode)
+            {
+                var currentNode = bestNode;
+                while (currentNode.parentNode != null)
                 {
-                    openList.Remove(bestNode);
-                    closedList.Add(bestNode);
+                    Path.Add(currentNode);
+                    currentNode = currentNode.parentNode;
                 }
-                if (bestNode == endNode)
-                {
-                    var currentNode = bestNode;
-                    while (currentNode.parentNode != null)
-                    {
-                        Path.Add(currentNode);
-                        currentNode = currentNode.parentNode;
-                    }
-                    Debug.Log("Iterations was " + iterationCount);
-                    Debug.Log("Path was" + Path);
+                Debug.Log("Iterations was " + iterationCount);
+                Debug.Log("Path was" + Path.Count);
 
-                    Path.Reverse();
+                Path.Reverse();
 
-                    return Path;
-                }
-                var neighbourList = CheckNeighbours(openList, closedList, bestNode);
-                foreach (var neighbour in neighbourList)
+                return Path;
+            }
+            var neighbourList = CheckNeighbours(openList, closedList, bestNode);
+            foreach (var neighbour in neighbourList)
+            {
+                if (!openList.Contains(neighbour))
                 {
-                    if (!openList.Contains(neighbour))
+                    neighbour.gCost = bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, neighbour.Node.worldLocation);
+                    neighbour.hCost = calculateHCost(neighbour.Node.worldLocation, endNode.Node.worldLocation);
+                    neighbour.parentNode = bestNode;
+                    openList.Add(neighbour);
+                }
+                else
+                {
+                    var newGCost = bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, neighbour.Node.worldLocation);
+                    if (newGCost < neighbour.gCost)
                     {
-                        neighbour.gCost = bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, neighbour.Node.worldLocation);
-                        neighbour.hCost = calculateHCost(neighbour.Node.worldLocation, endNode.Node.worldLocation);
                         neighbour.parentNode = bestNode;
-                        openList.Add(neighbour);
-                    }
-                    else
-                    {
-                        var newGCost = bestNode.gCost + calculateHCost(bestNode.Node.worldLocation, neighbour.Node.worldLocation);
-                        if (newGCost < neighbour.gCost)
-                        {
-                            neighbour.parentNode = bestNode;
-                            neighbour.gCost = newGCost;
-                        }
+                        neighbour.gCost = newGCost;
                     }
                 }
             }
         }
-        //return Path;
 
-        return (openList);
+        return null;
     }
 
     public List<PathFindingNode> CheckNeighbours(List<PathFindingNode> _openList, List<PathFindingNode> _closedList, PathFindingNode bestNode)
