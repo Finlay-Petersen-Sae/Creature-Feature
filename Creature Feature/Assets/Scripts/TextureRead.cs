@@ -94,29 +94,30 @@ public class TextureRead : MonoBehaviour
                     //{
                     //    endPoint = new Vector2(xIndex, yIndex);
                     //}
+                    Vector3 spawnPoint = startNode.transform.position;
+                    spawnPoint.x += (xIndex - startNodeMarkerLoc.x) * pixelToWorldScale.x;
+                    spawnPoint.z += (yIndex - startNodeMarkerLoc.z) * pixelToWorldScale.z;
+
                     if (pixelColour == highPriorityPassableColour)
                     {
-                        Vector3 spawnPoint = startNode.transform.position;
-                        spawnPoint.x += (xIndex - startNodeMarkerLoc.x) - pixelToWorldScale.x;
-                        spawnPoint.z += (yIndex - startNodeMarkerLoc.z) - pixelToWorldScale.z;
                         PathDataNode Node = new PathDataNode(spawnPoint, new Vector2Int(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
                         pathDataNodeList.Add(Node);
                     }
                     else if (pixelColour == lowPriorityPassableColour)
                     {
-                        Vector3 spawnPoint = startNode.transform.position;
-                        spawnPoint.x += (xIndex - startNodeMarkerLoc.x) - pixelToWorldScale.x;
-                        spawnPoint.z += (yIndex - startNodeMarkerLoc.z) - pixelToWorldScale.z;
                         PathDataNode Node = new PathDataNode(spawnPoint, new Vector2Int(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
                         pathDataNodeList.Add(Node);
                     }
                     else if (pixelColour == unpassableColour)
                     {
-                        Vector3 spawnPoint = startNode.transform.position;
-                        spawnPoint.x += (xIndex - startNodeMarkerLoc.x) - pixelToWorldScale.x;
-                        spawnPoint.z += (yIndex - startNodeMarkerLoc.z) - pixelToWorldScale.z;
                         PathDataNode Node = new PathDataNode(spawnPoint, new Vector2Int(xIndex, yIndex), PathDataNode.NodeType.HighPriority);
                         pathDataNodeList.Add(Node);
+                    }
+                    else
+                    {
+                        PathDataNode Node = new PathDataNode(spawnPoint, new Vector2Int(xIndex, yIndex), PathDataNode.NodeType.UnPassable);
+                        pathDataNodeList.Add(Node);
+
                     }
                 }
             }
@@ -166,7 +167,7 @@ public class TextureRead : MonoBehaviour
                 }
             }
         }
-        pixelToWorldScale = startNode.transform.position - endNode.transform.position;
+        pixelToWorldScale = endNode.transform.position - startNode.transform.position;
 
         pixelToWorldScale.x /= (endNodeMarkerLoc.x - startNodeMarkerLoc.x);
         pixelToWorldScale.z /= (endNodeMarkerLoc.z - startNodeMarkerLoc.z);
