@@ -15,6 +15,9 @@ public class PathFinding : MonoBehaviour
 
     public int iterationCount;
 
+    [Header("Debug")]
+    public GameObject Test_Cat;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -39,6 +42,10 @@ public class PathFinding : MonoBehaviour
         var pathNode2 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count)], 0, 0);
       
         Path = PathFind(pathNode1, pathNode2);
+        Vector3 spawnPoint = pathNode1.Node.worldLocation;
+        var cat = Instantiate(Test_Cat, new Vector3(spawnPoint.x, 0.5f, spawnPoint.z), Quaternion.identity);
+        var destinationset = cat.GetComponent<Character>();
+        destinationset.SetDestination(pathNode2.Node.worldLocation);
     }
 
     public float calculateHCost(Vector3 _Start, Vector3 _End)
@@ -140,7 +147,7 @@ public class PathFinding : MonoBehaviour
         var pathdata = PDM;
 
         var nodeWest = PDM.GetNode(bestNode.Node.gridLocation + west);
-        if (nodeWest != null)
+        if (nodeWest != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeWest))
             {
@@ -152,7 +159,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeEast = PDM.GetNode(bestNode.Node.gridLocation + east);
-        if (nodeEast != null)
+        if (nodeEast != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeEast))
             {
@@ -164,7 +171,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeNorth = PDM.GetNode(bestNode.Node.gridLocation + north);
-        if (nodeNorth != null)
+        if (nodeNorth != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeNorth))
             {
@@ -176,7 +183,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeSouth = PDM.GetNode(bestNode.Node.gridLocation + south);
-        if (nodeSouth != null)
+        if (nodeSouth != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeSouth))
             {
@@ -188,7 +195,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeNorthWest = PDM.GetNode(bestNode.Node.gridLocation + northwest);
-        if (nodeNorthWest != null)
+        if (nodeNorthWest != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeNorthWest))
             {
@@ -200,7 +207,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeNorthEast = PDM.GetNode(bestNode.Node.gridLocation + northeast);
-        if (nodeNorthEast != null)
+        if (nodeNorthEast != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeNorthEast))
             {
@@ -212,7 +219,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeSouthWest = PDM.GetNode(bestNode.Node.gridLocation + southwest);
-        if (nodeSouthWest != null)
+        if (nodeSouthWest != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeSouthWest))
             {
@@ -224,7 +231,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeSouthEast = PDM.GetNode(bestNode.Node.gridLocation + southeast);
-        if (nodeSouthEast != null)
+        if (nodeSouthEast != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeSouthEast))
             {

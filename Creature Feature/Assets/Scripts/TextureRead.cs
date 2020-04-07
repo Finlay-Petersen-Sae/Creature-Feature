@@ -40,6 +40,8 @@ public class TextureRead : MonoBehaviour
     private int width;
     private int height;
 
+ 
+
     // Start is called before the first frame update
     private void Awake()
     {

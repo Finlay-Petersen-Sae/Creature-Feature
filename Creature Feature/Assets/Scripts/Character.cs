@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
         // do we have no destination?
         if (!HasDestination)
         {
-            SetDestination(new Vector3(Random.Range(-9f, 9f), transform.position.y, Random.Range(-9f, 9f)));
+            
         }
 
         // can and should draw path?
@@ -158,7 +158,11 @@ public class Character : MonoBehaviour
         CurrentPoint = 0;
 
         // TODO - Call to pathfinding would go here. 
-        // Path = Pathfinding.FindPath(transform.position, newDestination);
+        foreach (var item in FindObjectOfType<PathFinding>().Path)
+        {
+            var pathloc = item.Node.worldLocation;
+            Path.Add(pathloc);
+        }
 
         // if (Path == null || Path.Count == 0)
         // {
