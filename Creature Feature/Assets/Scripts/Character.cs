@@ -190,6 +190,6 @@ public class Character : MonoBehaviour
         }
         */
         // add the destination point
-        Path.Add(Destination.Node.worldLocation);
+        Path.Add(Destination);
     }
 }

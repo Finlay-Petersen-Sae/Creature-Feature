@@ -56,7 +56,7 @@ public class PathFinding : MonoBehaviour
     public List<PathFindingNode> PathFind(Vector3 startNodeLoc, Vector3 endNodeLoc)
     {
         var startNode = CreatePathNode(startNodeLoc);
-        var endNode = CreatePathNode(endNodeLoc)
+        var endNode = CreatePathNode(endNodeLoc);
         start = startNode.Node.worldLocation;
         end = endNode.Node.worldLocation;
         startNode.gCost = 0;
@@ -283,16 +283,26 @@ public class PathFinding : MonoBehaviour
 
     public PathFindingNode CreatePathNode(Vector3 _checkLoc)
     {
+        PathDataNode idealNode = null;
+        float prevdist = 10000000f;
         Vector3Int.FloorToInt(_checkLoc);
-        foreach (var node in pathDataList)
+        foreach (var node in PDM.pathDataList)
         {
-            if (node.worldLocation == _checkLoc)
+            var dist = Vector3.Distance(_checkLoc, node.worldLocation);
+            if(prevdist < dist)
             {
-                var pathNode = new PathFindingNode(node, 0, 0);
-                pathNode.Node = node;
-                return pathNode;
+                prevdist = dist;
+                idealNode = node;
             }
+
         }
-        return null;
+        if (idealNode == null)
+            return null;
+        else
+        {
+            var PathFindNode = new PathFindingNode(idealNode, 0, 0);
+            return PathFindNode;
+        }
+  
     }
 }
