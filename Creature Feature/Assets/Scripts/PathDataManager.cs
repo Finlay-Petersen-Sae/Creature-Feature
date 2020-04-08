@@ -21,4 +21,20 @@ public class PathDataManager : MonoBehaviour
 
         return pathDataList[index];
     }
+
+    public PathFindingNode CreatePathNode(Vector3 _checkLoc)
+    {
+        Vector3Int.FloorToInt(_checkLoc);
+        foreach (var node in pathDataList)
+        {
+            if (node.worldLocation == _checkLoc)
+            {
+                var pathNode = new PathFindingNode(node, 0, 0);
+                pathNode.Node = node;
+                return pathNode;
+            }
+        }
+        return null;
+    }
+
 }

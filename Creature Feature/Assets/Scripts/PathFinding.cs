@@ -45,7 +45,6 @@ public class PathFinding : MonoBehaviour
         Vector3 spawnPoint = pathNode1.Node.worldLocation;
         var cat = Instantiate(Test_Cat, new Vector3(spawnPoint.x, 0.5f, spawnPoint.z), Quaternion.identity);
         var destinationset = cat.GetComponent<Character>();
-        destinationset.SetDestination(pathNode2.Node.worldLocation);
     }
 
     public float calculateHCost(Vector3 _Start, Vector3 _End)

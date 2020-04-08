@@ -16,6 +16,8 @@ public class PathFindingNode : IEquatable<PathFindingNode>
         hCost = _hcost; 
     }
 
+
+
     public override bool Equals(object obj)
     {
         return Equals(obj as PathFindingNode);

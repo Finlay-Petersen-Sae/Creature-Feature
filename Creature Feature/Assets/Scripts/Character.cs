@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
     protected bool HasDestination = false;
-    protected Vector3 Destination = Vector3.zero;
+    protected PathFindingNode Destination = null;
     protected List<Vector3> Path = null;
     protected int CurrentPoint = -1;
     protected Rigidbody CharacterRB;
@@ -18,26 +17,33 @@ public class Character : MonoBehaviour
 
     [Header("Steering Controls")]
     public float MaximumSpeed = 1f;
+
     [Range(0f, 1f)] public float Aggressiveness = 0.5f;
 
     [Header("Avoidance Controls")]
     public bool EnableAvoidance = true;
+
     [Range(0f, 1f)] public float AvoidancePriority = 0.5f;
 
     [Header("Debug Controls")]
     public bool DEBUG_DrawPath = true;
 
-    void Start()
+    private PathFinding Pathfinding;
+    private PathDataManager PDM;
+
+    private void Start()
     {
         CharacterRB = GetComponent<Rigidbody>();
+        Pathfinding = GetComponent<PathFinding>();
+        PDM = GetComponent<PathDataManager>();
     }
 
-    void Update()
+    private void Update()
     {
         // do we have no destination?
         if (!HasDestination)
         {
-            
+            //SetDestination(new Vector3(Random.Range(-9f, 9f), transform.position.y, Random.Range(-9f, 9f)));
         }
 
         // can and should draw path?
@@ -52,7 +58,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         // What we have
         //  - Path (list of points)
@@ -102,7 +108,7 @@ public class Character : MonoBehaviour
         if (EnableAvoidance)
         {
             // work out the total avoidance vector
-            foreach(Obstacle obstacle in ObstacleManager.Obstacles)
+            foreach (Obstacle obstacle in ObstacleManager.Obstacles)
             {
                 avoidanceVector += obstacle.GetFieldTo(transform.position);
             }
@@ -112,7 +118,7 @@ public class Character : MonoBehaviour
             avoidanceVector = avoidanceVector.normalized * Mathf.Min(avoidanceMag, MaximumSpeed);
         }
 
-        Vector3 steeringVector = Vector3.Lerp(desiredVector * desiredSpeed, avoidanceVector, 
+        Vector3 steeringVector = Vector3.Lerp(desiredVector * desiredSpeed, avoidanceVector,
                                               EnableAvoidance ? AvoidancePriority : 0f);
 
         // Update the character's velocity
@@ -124,8 +130,8 @@ public class Character : MonoBehaviour
         get
         {
             // Typically for this we do a 2D check
-            float distance2DSquared = Mathf.Pow(Destination.x - transform.position.x, 2) + 
-                                      Mathf.Pow(Destination.z - transform.position.z, 2);
+            float distance2DSquared = Mathf.Pow(Destination.Node.worldLocation.x - transform.position.x, 2) +
+                                      Mathf.Pow(Destination.Node.worldLocation.z - transform.position.z, 2);
 
             return distance2DSquared < (DestinationThreshold * DestinationThreshold);
         }
@@ -136,17 +142,17 @@ public class Character : MonoBehaviour
         get
         {
             // Typically for this we do a 2D check
-            float distance2DSquared = Mathf.Pow(Path[CurrentPoint].x - transform.position.x, 2) + 
+            float distance2DSquared = Mathf.Pow(Path[CurrentPoint].x - transform.position.x, 2) +
                                       Mathf.Pow(Path[CurrentPoint].z - transform.position.z, 2);
 
             return distance2DSquared < (PointReachedThreshold * PointReachedThreshold);
         }
     }
 
-    public void SetDestination(Vector3 newDestination)
+    public void SetDestination(PathFindingNode newDestination)
     {
         // is this the same as our current one?
-        if (HasDestination && ((newDestination - Destination).sqrMagnitude < float.Epsilon))
+        if (HasDestination && ((newDestination.Node.worldLocation - Destination.Node.worldLocation).sqrMagnitude < float.Epsilon))
         {
             // nothing to do as we already have this as a destination
             return;
@@ -157,12 +163,8 @@ public class Character : MonoBehaviour
         HasDestination = true;
         CurrentPoint = 0;
 
-        // TODO - Call to pathfinding would go here. 
-        foreach (var item in FindObjectOfType<PathFinding>().Path)
-        {
-            var pathloc = item.Node.worldLocation;
-            Path.Add(pathloc);
-        }
+        // TODO - Call to pathfinding would go here.
+        Path = Pathfinding.PathFind(PDM.CreatePathNode(transform.position), newDestination);
 
         // if (Path == null || Path.Count == 0)
         // {
@@ -170,10 +172,10 @@ public class Character : MonoBehaviour
         //     return false;
         // }
 
-        /// 
+        ///
         /// THIS BLOCK BELOW IS PLACEHOLDER TO CREATE A PATH.
-        /// 
-        
+        ///
+        /*
         // we're going to contruct a random path using the markers
         List<Marker> markers = new List<Marker>(FindObjectsOfType<Marker>());
 
@@ -186,8 +188,8 @@ public class Character : MonoBehaviour
             Path.Add(marker.transform.position);
             markers.Remove(marker);
         }
-
+        */
         // add the destination point
-        Path.Add(Destination);
+        Path.Add(Destination.Node.worldLocation);
     }
 }
