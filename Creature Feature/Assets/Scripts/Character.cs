@@ -4,7 +4,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     protected bool HasDestination = false;
-    protected PathFindingNode Destination = null;
+    protected Vector3 Destination;
     protected List<Vector3> Path = null;
     protected int CurrentPoint = -1;
     protected Rigidbody CharacterRB;
@@ -130,8 +130,8 @@ public class Character : MonoBehaviour
         get
         {
             // Typically for this we do a 2D check
-            float distance2DSquared = Mathf.Pow(Destination.Node.worldLocation.x - transform.position.x, 2) +
-                                      Mathf.Pow(Destination.Node.worldLocation.z - transform.position.z, 2);
+            float distance2DSquared = Mathf.Pow(Destination.x - transform.position.x, 2) +
+                                      Mathf.Pow(Destination.z - transform.position.z, 2);
 
             return distance2DSquared < (DestinationThreshold * DestinationThreshold);
         }
@@ -149,10 +149,10 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void SetDestination(PathFindingNode newDestination)
+    public void SetDestination(Vector3 newDestination)
     {
         // is this the same as our current one?
-        if (HasDestination && ((newDestination.Node.worldLocation - Destination.Node.worldLocation).sqrMagnitude < float.Epsilon))
+        if (HasDestination && ((newDestination - Destination).sqrMagnitude < float.Epsilon))
         {
             // nothing to do as we already have this as a destination
             return;
@@ -164,7 +164,7 @@ public class Character : MonoBehaviour
         CurrentPoint = 0;
 
         // TODO - Call to pathfinding would go here.
-        Path = Pathfinding.PathFind(PDM.CreatePathNode(transform.position), newDestination);
+        Path = Pathfinding.PathFind(transform.position, newDestination);
 
         // if (Path == null || Path.Count == 0)
         // {

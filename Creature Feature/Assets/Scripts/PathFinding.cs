@@ -41,7 +41,7 @@ public class PathFinding : MonoBehaviour
         var pathNode1 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count)], 0, 0);
         var pathNode2 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count)], 0, 0);
       
-        Path = PathFind(pathNode1, pathNode2);
+        //Path = PathFind(pathNode1, pathNode2);
         Vector3 spawnPoint = pathNode1.Node.worldLocation;
         var cat = Instantiate(Test_Cat, new Vector3(spawnPoint.x, 0.5f, spawnPoint.z), Quaternion.identity);
         var destinationset = cat.GetComponent<Character>();
@@ -53,8 +53,10 @@ public class PathFinding : MonoBehaviour
         return hcost;
     }
 
-    public List<PathFindingNode> PathFind(PathFindingNode startNode, PathFindingNode endNode)
+    public List<PathFindingNode> PathFind(Vector3 startNodeLoc, Vector3 endNodeLoc)
     {
+        var startNode = CreatePathNode(startNodeLoc);
+        var endNode = CreatePathNode(endNodeLoc)
         start = startNode.Node.worldLocation;
         end = endNode.Node.worldLocation;
         startNode.gCost = 0;
@@ -276,5 +278,21 @@ public class PathFinding : MonoBehaviour
         {
             Debug.DrawRay(Node.Node.worldLocation, Vector3.up * 5, Color.magenta);
         }
+    }
+
+
+    public PathFindingNode CreatePathNode(Vector3 _checkLoc)
+    {
+        Vector3Int.FloorToInt(_checkLoc);
+        foreach (var node in pathDataList)
+        {
+            if (node.worldLocation == _checkLoc)
+            {
+                var pathNode = new PathFindingNode(node, 0, 0);
+                pathNode.Node = node;
+                return pathNode;
+            }
+        }
+        return null;
     }
 }
