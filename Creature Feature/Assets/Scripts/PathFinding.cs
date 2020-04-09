@@ -55,6 +55,9 @@ public class PathFinding : MonoBehaviour
 
     public List<PathFindingNode> PathFind(Vector3 startNodeLoc, Vector3 endNodeLoc)
     {
+        openList = new List<PathFindingNode>();
+        closedList = new List<PathFindingNode>();
+        
         var startNode = CreatePathNode(startNodeLoc);
         var endNode = CreatePathNode(endNodeLoc);
         start = startNode.Node.worldLocation;
@@ -145,6 +148,8 @@ public class PathFinding : MonoBehaviour
         List<PathFindingNode> neighbourList = new List<PathFindingNode>();
 
         var pathdata = PDM;
+
+        // TODO - less nodeWests
 
         var nodeWest = PDM.GetNode(bestNode.Node.gridLocation + west);
         if (nodeWest != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
@@ -284,7 +289,7 @@ public class PathFinding : MonoBehaviour
     {
         PathDataNode idealNode = null;
         float prevdist = 10000000f;
-        Vector3Int.FloorToInt(_checkLoc);
+        
         foreach (var node in PDM.pathDataList)
         {
             var dist = Vector3.Distance(_checkLoc, node.worldLocation);

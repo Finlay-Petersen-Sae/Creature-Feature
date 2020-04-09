@@ -166,30 +166,11 @@ public class Character : MonoBehaviour
         // TODO - Call to pathfinding would go here.
         Path = Pathfinding.PathFind(transform.position, newDestination);
 
-        // if (Path == null || Path.Count == 0)
-        // {
-        //     HasDestination = false;
-        //     return false;
-        // }
-
-        ///
-        /// THIS BLOCK BELOW IS PLACEHOLDER TO CREATE A PATH.
-        ///
-        /*
-        // we're going to contruct a random path using the markers
-        List<Marker> markers = new List<Marker>(FindObjectsOfType<Marker>());
-
-        // clear the path and then pick 3 markers
-        Path = new List<Vector3>();
-        while (Path.Count < 3 && markers.Count > 0)
+        if (Path == null || Path.Count == 0)
         {
-            var marker = markers[Random.Range(0, markers.Count)];
+            HasDestination = false;
 
-            Path.Add(marker.transform.position);
-            markers.Remove(marker);
+            // TODO - let AI behaviours know that pathfinding failed
         }
-        */
-        // add the destination point
-        //Path.Add(Destination);
     }
 }
