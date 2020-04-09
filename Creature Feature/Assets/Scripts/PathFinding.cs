@@ -164,7 +164,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeEast = PDM.GetNode(bestNode.Node.gridLocation + east);
-        if (nodeEast != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
+        if (nodeEast != null && nodeEast.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeEast))
             {
@@ -176,7 +176,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeNorth = PDM.GetNode(bestNode.Node.gridLocation + north);
-        if (nodeNorth != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
+        if (nodeNorth != null && nodeNorth.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeNorth))
             {
@@ -188,7 +188,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeSouth = PDM.GetNode(bestNode.Node.gridLocation + south);
-        if (nodeSouth != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
+        if (nodeSouth != null && nodeSouth.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeSouth))
             {
@@ -200,7 +200,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeNorthWest = PDM.GetNode(bestNode.Node.gridLocation + northwest);
-        if (nodeNorthWest != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
+        if (nodeNorthWest != null && nodeNorthWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeNorthWest))
             {
@@ -212,7 +212,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeNorthEast = PDM.GetNode(bestNode.Node.gridLocation + northeast);
-        if (nodeNorthEast != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
+        if (nodeNorthEast != null && nodeNorthEast.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeNorthEast))
             {
@@ -224,7 +224,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeSouthWest = PDM.GetNode(bestNode.Node.gridLocation + southwest);
-        if (nodeSouthWest != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
+        if (nodeSouthWest != null && nodeSouthWest.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeSouthWest))
             {
@@ -236,7 +236,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeSouthEast = PDM.GetNode(bestNode.Node.gridLocation + southeast);
-        if (nodeSouthEast != null && nodeWest.type != PathDataNode.NodeType.UnPassable)
+        if (nodeSouthEast != null && nodeSouthEast.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeSouthEast))
             {
