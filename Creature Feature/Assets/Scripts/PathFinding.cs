@@ -39,7 +39,7 @@ public class PathFinding : MonoBehaviour
     public void PathMake()
     {
         var pathNode1 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count)], 0, 0);
-        var pathNode2 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count)], 0, 0);
+        //var pathNode2 = new PathFindingNode(PDM.pathDataList[Random.Range(0, PDM.pathDataList.Count)], 0, 0);
       
         //Path = PathFind(pathNode1, pathNode2);
         Vector3 spawnPoint = pathNode1.Node.worldLocation;
@@ -70,7 +70,6 @@ public class PathFinding : MonoBehaviour
 
         iterationCount = 0;
         var thresholdLimit = 1600;
-        iterationCount = 0;
         List<PathFindingNode> Path = new List<PathFindingNode>();
         while (openList.Count > 0)
         {
@@ -289,7 +288,7 @@ public class PathFinding : MonoBehaviour
         foreach (var node in PDM.pathDataList)
         {
             var dist = Vector3.Distance(_checkLoc, node.worldLocation);
-            if(prevdist < dist)
+            if(prevdist > dist)
             {
                 prevdist = dist;
                 idealNode = node;

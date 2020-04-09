@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3962753018057631591}
   - component: {fileID: 8462341337276016910}
   - component: {fileID: 3932601010692350082}
+  - component: {fileID: 3420955400078995003}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -69,6 +70,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
+--- !u!114 &3420955400078995003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 881faa8ccd5c249f596419685c4e85b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DestinationThreshold: 0.1
+  PointReachedThreshold: 1
+  MaximumSpeed: 1
+  Aggressiveness: 0.5
+  EnableAvoidance: 1
+  AvoidancePriority: 0.5
+  DEBUG_DrawPath: 1
 --- !u!1 &3945001799519832605
 GameObject:
   m_ObjectHideFlags: 0

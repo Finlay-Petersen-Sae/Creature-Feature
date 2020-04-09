@@ -5,7 +5,7 @@ public class Character : MonoBehaviour
 {
     protected bool HasDestination = false;
     protected Vector3 Destination;
-    protected List<Vector3> Path = null;
+    protected List<PathFindingNode> Path = null;
     protected int CurrentPoint = -1;
     protected Rigidbody CharacterRB;
 
@@ -28,14 +28,14 @@ public class Character : MonoBehaviour
     [Header("Debug Controls")]
     public bool DEBUG_DrawPath = true;
 
-    private PathFinding Pathfinding;
+    public PathFinding Pathfinding;
     private PathDataManager PDM;
 
     private void Start()
     {
         CharacterRB = GetComponent<Rigidbody>();
-        Pathfinding = GetComponent<PathFinding>();
-        PDM = GetComponent<PathDataManager>();
+        Pathfinding = FindObjectOfType<PathFinding>();
+        PDM = FindObjectOfType<PathDataManager>();
     }
 
     private void Update()
@@ -43,17 +43,17 @@ public class Character : MonoBehaviour
         // do we have no destination?
         if (!HasDestination)
         {
-            //SetDestination(new Vector3(Random.Range(-9f, 9f), transform.position.y, Random.Range(-9f, 9f)));
+            SetDestination(new Vector3(Random.Range(-2f, 2f), transform.position.y, Random.Range(-2f, 2f)));
         }
 
         // can and should draw path?
         if (DEBUG_DrawPath && HasDestination)
         {
             // draw the path
-            Debug.DrawLine(transform.position, Path[CurrentPoint], Color.green);
+            Debug.DrawLine(transform.position, Path[CurrentPoint].Node.worldLocation, Color.green);
             for (int index = CurrentPoint; index < Path.Count - 1; ++index)
             {
-                Debug.DrawLine(Path[index], Path[index + 1], Color.blue);
+                Debug.DrawLine(Path[index].Node.worldLocation, Path[index + 1].Node.worldLocation, Color.blue);
             }
         }
     }
@@ -98,7 +98,7 @@ public class Character : MonoBehaviour
         //      - Has it been trying to move but not moved much for a set time?
 
         // Get our desired movement vector
-        Vector3 desiredVector = Path[CurrentPoint] - transform.position;
+        Vector3 desiredVector = Path[CurrentPoint].Node.worldLocation - transform.position;
         float desiredSpeed = MaximumSpeed;
         desiredVector.y = 0;
         desiredVector.Normalize();
@@ -142,8 +142,8 @@ public class Character : MonoBehaviour
         get
         {
             // Typically for this we do a 2D check
-            float distance2DSquared = Mathf.Pow(Path[CurrentPoint].x - transform.position.x, 2) +
-                                      Mathf.Pow(Path[CurrentPoint].z - transform.position.z, 2);
+            float distance2DSquared = Mathf.Pow(Path[CurrentPoint].Node.worldLocation.x - transform.position.x, 2) +
+                                      Mathf.Pow(Path[CurrentPoint].Node.worldLocation.z - transform.position.z, 2);
 
             return distance2DSquared < (PointReachedThreshold * PointReachedThreshold);
         }
@@ -190,6 +190,6 @@ public class Character : MonoBehaviour
         }
         */
         // add the destination point
-        Path.Add(Destination);
+        //Path.Add(Destination);
     }
 }
