@@ -21,6 +21,7 @@ public class PathDataManager : MonoBehaviour
 
         return pathDataList[index];
     }
+    // get node from location
 
     public PathFindingNode CreatePathNode(Vector3 _checkLoc)
     {
@@ -36,5 +37,6 @@ public class PathDataManager : MonoBehaviour
         }
         return null;
     }
+    //get closest node from a location
 
 }

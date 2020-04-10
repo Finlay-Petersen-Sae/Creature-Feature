@@ -8,6 +8,7 @@ public class PathFindingNode : IEquatable<PathFindingNode>
     public PathDataNode Node;
     public float gCost, hCost;
     public PathFindingNode parentNode;
+    // variables
 
     public PathFindingNode(PathDataNode _node, float _gcost, float _hcost)
     {
@@ -15,7 +16,7 @@ public class PathFindingNode : IEquatable<PathFindingNode>
         gCost = _gcost;
         hCost = _hcost; 
     }
-
+    //constructer
 
 
     public override bool Equals(object obj)

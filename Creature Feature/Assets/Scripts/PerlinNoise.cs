@@ -14,12 +14,14 @@ public class PerlinNoise : MonoBehaviour
     private void Awake()
     {
         GenerateTexture();
+        //calls it so generation is done before the camera renders
     }
 
     private void Start()
     {
         renderer = GetComponent<Renderer>();
-        renderer.material.mainTexture = GenerateTexture();
+
+
         //CoalatePerlinNoise();
     
 
@@ -35,7 +37,7 @@ public class PerlinNoise : MonoBehaviour
     Texture2D GenerateTexture()
     {
         Texture2D texture = new Texture2D(width, height);
-
+        // create a new texture 2d
         for (int x = 0; x < width; x += 5)
         {
             for (int y = 0; y < height; y += 5)
@@ -44,10 +46,12 @@ public class PerlinNoise : MonoBehaviour
                 zLoc = y;
                 Color colour = CalcColour(x, y);
                 texture.SetPixel(x, y, colour);
+                //create and set textures
             }
         }
 
         texture.Apply();
+        //apply to tex var
         return texture;
     }
 
@@ -57,6 +61,7 @@ public class PerlinNoise : MonoBehaviour
         float yCoord = (float)y / height;
 
         float sample = Mathf.PerlinNoise(xCoord, yCoord);
+        //calc the colour of each pixel
         Generation(sample, Random.Range(0,4));
         return new Color(sample, sample, sample);
     }
@@ -74,12 +79,14 @@ public class PerlinNoise : MonoBehaviour
                 float sample = Mathf.PerlinNoise(xCoord + newNoise, yCoord + newNoise);
             }
         }
+        //coalate and return a sample of the noise.
     }
 
     void Generation(float noiseSample, float rNumber)
     {
         float spawnLocx = xLoc - hypotenuse;
         float spawnLocz = zLoc - hypotenuse;
+        //make it spawn in the right area
         int caseSwitch = 0;
         if (noiseSample <= 0.25)
         {
@@ -98,6 +105,7 @@ public class PerlinNoise : MonoBehaviour
             Debug.LogError("This should return a value, something is wrong");
         }
 
+        //if the noise sample is between x amount go to x case
         
         switch (caseSwitch)
         {
@@ -143,6 +151,7 @@ public class PerlinNoise : MonoBehaviour
                     Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 break;
+                // rnumber is random based on it spawn a specific type of object
         }
     }
 

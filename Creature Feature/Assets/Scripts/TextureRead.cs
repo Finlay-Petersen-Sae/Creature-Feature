@@ -60,8 +60,11 @@ public class TextureRead : MonoBehaviour
         endNodeMarkerLoc = Vector3Int.zero;
         pathDataManager = FindObjectOfType<PathDataManager>();
         pathDataManager.WorldSize = new Vector2Int(width, height);
+        // set all variables
         Render();
+        // render it after procgen has occured
         ProcGen();
+        //generate the pathdata nodes
     }
 
     private void Update()
@@ -99,6 +102,7 @@ public class TextureRead : MonoBehaviour
                     Vector3 spawnPoint = startNode.transform.position;
                     spawnPoint.x += (xIndex - startNodeMarkerLoc.x) * pixelToWorldScale.x;
                     spawnPoint.z += (yIndex - startNodeMarkerLoc.z) * pixelToWorldScale.z;
+                    // for each pixel on the texture
 
                     if (pixelColour == highPriorityPassableColour)
                     {
@@ -121,10 +125,12 @@ public class TextureRead : MonoBehaviour
                         pathDataNodeList.Add(Node);
 
                     }
+                    // add a node based on colour
                 }
             }
             pathDataManager.pathDataList = pathDataNodeList;
             Debug.Log("pathdata list" + pathDataNodeList.Count);
+            //return the list
         }
     }
 
@@ -139,6 +145,7 @@ public class TextureRead : MonoBehaviour
         targetTexture2D.Apply();
         pix = targetTexture2D.GetPixels(x, y, width, height);
         targetTexture2D.SetPixels(pix);
+        //read pixels from camera, render and apply it to the target texture.
 
 
 
@@ -176,6 +183,7 @@ public class TextureRead : MonoBehaviour
         pixelToWorldScale.y = 0;
 
         Debug.Log("pixel to world scale is " + pixelToWorldScale);
+        // convert pixel to world scale
 
         //Vector3 spawnPoint = startNode.transform.position;
         //spawnPoint.x += (15 - pixelToWorldScale.x - startNodeMarkerLoc.x);
@@ -191,6 +199,7 @@ public class TextureRead : MonoBehaviour
         foreach (var PathDataNode in pathDataNodeList)
         {
             Debug.DrawRay(PathDataNode.worldLocation, Vector3.up, Color.magenta);
+            //draw ray straight up on all nodes
         }
     }
 }

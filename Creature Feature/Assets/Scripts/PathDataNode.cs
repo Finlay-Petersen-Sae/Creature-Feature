@@ -11,13 +11,16 @@ public class PathDataNode : IEquatable<PathDataNode>
         LowPriority,
         UnPassable
     };
+    // node type
 
     public NodeType type;
     // private List<PathDataEdges> edges = new List<PathDataEdges>();
 
+    /*
     public bool HighPriority;
     public bool LowPriority;
     public bool Unpassable;
+    */
 
     public Vector3 worldLocation;
     public Vector2Int gridLocation;
@@ -29,6 +32,7 @@ public class PathDataNode : IEquatable<PathDataNode>
 
         type = _type;
     }
+    //constructer
 
     public override bool Equals(object obj)
     {

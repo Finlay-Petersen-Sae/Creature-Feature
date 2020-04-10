@@ -18,10 +18,13 @@ public class PathFinding : MonoBehaviour
     [Header("Debug")]
     public GameObject Test_Cat;
 
+    //variables
+
     // Start is called before the first frame update
     private void Start()
     {
         PDM = FindObjectOfType<PathDataManager>();
+        //assign pdm to pathdatamanger
     }
 
     // Update is called once per frame
@@ -34,6 +37,7 @@ public class PathFinding : MonoBehaviour
             Debug.DrawRay(start, Vector3.up * 100, Color.cyan);
             Debug.DrawRay(end, Vector3.up * 100, Color.green);
         }
+        //draw paths
     }
 
     public void PathMake()
@@ -45,6 +49,8 @@ public class PathFinding : MonoBehaviour
         Vector3 spawnPoint = pathNode1.Node.worldLocation;
         var cat = Instantiate(Test_Cat, new Vector3(spawnPoint.x, 0.5f, spawnPoint.z), Quaternion.identity);
         var destinationset = cat.GetComponent<Character>();
+
+        //set a path node and then spawn a cat.
     }
 
     public float calculateHCost(Vector3 _Start, Vector3 _End)
@@ -52,6 +58,7 @@ public class PathFinding : MonoBehaviour
         var hcost = Vector3.Distance(_Start, _End);
         return hcost;
     }
+    //calculate the hcost
 
     public List<PathFindingNode> PathFind(Vector3 startNodeLoc, Vector3 endNodeLoc)
     {
@@ -65,15 +72,16 @@ public class PathFinding : MonoBehaviour
         startNode.gCost = 0;
         startNode.hCost = calculateHCost(startNode.Node.worldLocation, endNode.Node.worldLocation);
         endNode.gCost = 0;
-
+        // set start and end mode variables and clear the open and close list
         if (startNode != null)
         {
             openList.Add(startNode);
         }
-
+        //add start to open list
         iterationCount = 0;
         var thresholdLimit = 1600;
         List<PathFindingNode> Path = new List<PathFindingNode>();
+        // set iteration, make a new path list
         while (openList.Count > 0)
         {
             iterationCount++;
@@ -81,7 +89,8 @@ public class PathFinding : MonoBehaviour
             {
                 break;
             }
-            
+            //if iteration is higher then threshold break
+
             PathFindingNode bestNode = openList[0];
             foreach (var pathNode in openList)
             {
@@ -90,10 +99,12 @@ public class PathFinding : MonoBehaviour
                     bestNode = pathNode;
                 }
             }
+            // go through each node in the list and if the node is more ideal then set it as the best node.
             if (bestNode != null)
             {
                 openList.Remove(bestNode);
                 closedList.Add(bestNode);
+                // if best node not null then add to closed list and remove from openlist
             }
             if (bestNode == endNode)
             {
@@ -109,6 +120,7 @@ public class PathFinding : MonoBehaviour
                 Path.Reverse();
 
                 return Path;
+                // if best node is endnode return the path
             }
             var neighbourList = CheckNeighbours(openList, closedList, bestNode);
             foreach (var neighbour in neighbourList)
@@ -129,6 +141,9 @@ public class PathFinding : MonoBehaviour
                         neighbour.gCost = newGCost;
                     }
                 }
+                // get the neighbour list and add the best node to the openlist.
+                // else
+                // add it to the open list
             }
         }
 
@@ -249,6 +264,7 @@ public class PathFinding : MonoBehaviour
         }
 
         return neighbourList;
+        // check all the cardinal and diagonal nodes and if it isnt unpassable add to the list
     }
 
     public bool OpenListCheck(List<PathFindingNode> openlist, PathDataNode checkNode, List<PathFindingNode> Neighbours)
@@ -262,6 +278,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         return false;
+        //cehck if it is in the open list
     }
 
     public bool ClosedListCheck(List<PathFindingNode> closedlist, PathDataNode checkNode)
@@ -274,6 +291,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         return false;
+        //check if it is in the on the closed list
     }
 
     private void DrawPathFindData(List<PathFindingNode> Pathdata)
@@ -282,6 +300,7 @@ public class PathFinding : MonoBehaviour
         {
             Debug.DrawRay(Node.Node.worldLocation, Vector3.up * 5, Color.magenta);
         }
+        //draw the path data
     }
 
 
@@ -307,6 +326,6 @@ public class PathFinding : MonoBehaviour
             var PathFindNode = new PathFindingNode(idealNode, 0, 0);
             return PathFindNode;
         }
-  
+        // create a pathdata node on the clsoest node to the player.
     }
 }
