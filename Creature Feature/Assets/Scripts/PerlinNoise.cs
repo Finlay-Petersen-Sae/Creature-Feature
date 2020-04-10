@@ -53,8 +53,8 @@ public class PerlinNoise : MonoBehaviour
 
     Color CalcColour(int x, int y)
     {
-        float xCoord = (float)x / width * scale + offsetX;
-        float yCoord = (float)y / height * scale + offsetY;
+        float xCoord = (float)x / width;
+        float yCoord = (float)y / height;
 
         float sample = Mathf.PerlinNoise(xCoord, yCoord);
         Generation(sample, Random.Range(0,4));

@@ -54,6 +54,7 @@ MonoBehaviour:
   EnableAvoidance: 1
   AvoidancePriority: 0.5
   DEBUG_DrawPath: 1
+  Pathfinding: {fileID: 0}
 --- !u!54 &3932601010692350082
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -85,10 +86,11 @@ MonoBehaviour:
   DestinationThreshold: 0.1
   PointReachedThreshold: 1
   MaximumSpeed: 1
-  Aggressiveness: 0.5
-  EnableAvoidance: 1
+  Aggressiveness: 0.75
+  EnableAvoidance: 0
   AvoidancePriority: 0.5
   DEBUG_DrawPath: 1
+  Pathfinding: {fileID: 0}
 --- !u!1 &3945001799519832605
 GameObject:
   m_ObjectHideFlags: 0
