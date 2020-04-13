@@ -275,6 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90815353a73c01f4a84decb0657941ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FoodObj: []
   WorldSize: {x: 0, y: 0}
 --- !u!4 &607051897
 Transform:
@@ -743,6 +744,8 @@ MonoBehaviour:
   - {fileID: 3214592643895433444, guid: c545f70fb910e6f44b0892a57d87a7d4, type: 3}
   - {fileID: 1381486343720905241, guid: 24579d86071d7f8488b72040fc810386, type: 3}
   - {fileID: 6267612751323777593, guid: b4fac454f7c5dcc41bfb4bdc45a2a882, type: 3}
+  - {fileID: 1081212178267725450, guid: 19b65c05e86fdd64f9aec531d40f612c, type: 3}
+  - {fileID: 3305652441979056819, guid: 6fd5934fd854f4e4f9f55ea893b7e8f9, type: 3}
 --- !u!23 &1457007815
 MeshRenderer:
   m_ObjectHideFlags: 0

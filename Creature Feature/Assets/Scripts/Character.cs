@@ -41,10 +41,10 @@ public class Character : MonoBehaviour
     private void Update()
     {
         // do we have no destination?
-        if (!HasDestination)
-        {
-            SetDestination(new Vector3(Random.Range(-2f, 2f), transform.position.y, Random.Range(-2f, 2f)));
-        }
+        //if (!HasDestination)
+        //{
+        //    SetDestination(new Vector3(Random.Range(-2f, 2f), transform.position.y, Random.Range(-2f, 2f)));
+        //}
 
         // can and should draw path?
         if (DEBUG_DrawPath && HasDestination)
@@ -172,5 +172,39 @@ public class Character : MonoBehaviour
 
             // TODO - let AI behaviours know that pathfinding failed
         }
+    }
+
+    public Vector3 ClosestFood()
+    {
+        //TODO MAKE ONE FOR WATER TOO
+        float dist = 1000000f;
+        GameObject idealfood = null;
+        foreach (var item in PDM.FoodObj)
+        {
+            if (Vector3.Distance(transform.position, item.transform.position) < dist)
+            {
+
+                idealfood = item;
+                dist = Vector3.Distance(transform.position, item.transform.position);
+            }
+        }
+        return idealfood.transform.position;
+    }
+
+    public Vector3 ClosestWater()
+    {
+        //TODO MAKE ONE FOR WATER TOO
+        float dist = 1000000f;
+        GameObject idealwater = null;
+        foreach (var item in PDM.FoodObj)
+        {
+            if (Vector3.Distance(transform.position, item.transform.position) < dist)
+            {
+
+                idealwater = item;
+                dist = Vector3.Distance(transform.position, item.transform.position);
+            }
+        }
+        return idealwater.transform.position;
     }
 }

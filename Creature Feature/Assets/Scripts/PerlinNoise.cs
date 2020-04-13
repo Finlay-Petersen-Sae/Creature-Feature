@@ -62,7 +62,7 @@ public class PerlinNoise : MonoBehaviour
 
         float sample = Mathf.PerlinNoise(xCoord, yCoord);
         //calc the colour of each pixel
-        Generation(sample, Random.Range(0,4));
+        Generation(sample, Random.Range(0,5));
         return new Color(sample, sample, sample);
     }
 
@@ -118,37 +118,61 @@ public class PerlinNoise : MonoBehaviour
                 {
                     Instantiate(SpawnableTiles[1], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
-                else if(rNumber > 2)
+                else if(rNumber > 2 && rNumber <= 3)
                 {
                     Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                }
+                else if (rNumber > 3 && rNumber <= 4)
+                {
+                    Instantiate(SpawnableTiles[3], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                }
+                else if (rNumber > 5)
+                {
+                    Instantiate(SpawnableTiles[4], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 break;
             case 2:
-                if (rNumber <= 0.25)
+                if (rNumber <= 1)
                 {
-                    Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                    Instantiate(SpawnableTiles[4], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
-                else if (rNumber > 0.25 && rNumber <= 0.85)
+                else if (rNumber > 1 && rNumber <= 2)
+                {
+                    Instantiate(SpawnableTiles[3], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                }
+                else if (rNumber > 2 && rNumber <= 3)
+                {
+                    Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                }
+                else if (rNumber > 3 && rNumber <= 4)
                 {
                     Instantiate(SpawnableTiles[1], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
-                else if (rNumber > 0.85)
+                else if (rNumber > 5)
                 {
-                    Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                    Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 break;
             case 3:
-                if (rNumber <= 0.25)
+                if (rNumber <= 1)
                 {
-                    Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                    Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
-                else if (rNumber > 0.25 && rNumber <= 0.85)
+                else if (rNumber > 1 && rNumber <= 2)
+                {
+                    Instantiate(SpawnableTiles[3], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                }
+                else if (rNumber > 2 && rNumber <= 3)
                 {
                     Instantiate(SpawnableTiles[1], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
-                else if (rNumber > 0.85)
+                else if (rNumber > 3 && rNumber <= 4)
                 {
-                    Instantiate(SpawnableTiles[2], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                    Instantiate(SpawnableTiles[4], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
+                }
+                else if (rNumber > 5)
+                {
+                    Instantiate(SpawnableTiles[0], new Vector3(spawnLocx, 0, spawnLocz), Quaternion.identity);
                 }
                 break;
                 // rnumber is random based on it spawn a specific type of object

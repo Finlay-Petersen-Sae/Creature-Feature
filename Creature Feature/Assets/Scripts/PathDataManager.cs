@@ -5,7 +5,21 @@ using UnityEngine;
 public class PathDataManager : MonoBehaviour
 {
     public List<PathDataNode> pathDataList = new List<PathDataNode>();
+    public List<GameObject> FoodObj = new List<GameObject>();
+    public List<GameObject> WaterObj = new List<GameObject>();
     public Vector2Int WorldSize;
+
+    public void Start()
+    {
+        foreach (var item in GameObject.FindGameObjectsWithTag("Food"))
+        {
+            FoodObj.Add(item);
+        }
+        foreach (var item in GameObject.FindGameObjectsWithTag("Water"))
+        {
+            WaterObj.Add(item);
+        }
+    }
 
     public PathDataNode GetNode(Vector2Int _checkLoc)
     {

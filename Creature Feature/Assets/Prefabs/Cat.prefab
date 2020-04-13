@@ -12,7 +12,16 @@ GameObject:
   - component: {fileID: 8462341337276016910}
   - component: {fileID: 3932601010692350082}
   - component: {fileID: 2278017028785931293}
+  - component: {fileID: 2245296246605684535}
   - component: {fileID: 3420955400078995003}
+  - component: {fileID: 7567706688176161277}
+  - component: {fileID: 4157346813031373491}
+  - component: {fileID: 1782441078635426612}
+  - component: {fileID: 3080843240894537395}
+  - component: {fileID: 5897010828785580082}
+  - component: {fileID: 2991342183817395169}
+  - component: {fileID: 7907609625751059300}
+  - component: {fileID: 7167684926933453078}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -84,6 +93,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2f52eef81324ec3b90e8a87a5dc61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2245296246605684535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a5e405ec5189141b9986f057b4ded2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  maxHunger: 0
+  maxThirst: 0
+  Ferocity: 0
+  Sturdiness: 0
+  maxCleansliness: 0
+  curHealth: 0
+  curHunger: 0
+  curThirst: 0
+  curCleansliness: 0
+  catName: 
+  closestfood: {fileID: 0}
 --- !u!114 &3420955400078995003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,6 +137,126 @@ MonoBehaviour:
   AvoidancePriority: 0.5
   DEBUG_DrawPath: 1
   Pathfinding: {fileID: 0}
+--- !u!114 &7567706688176161277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b36bcef1b89d2d4ba755db1d1c7768d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 0
+  UniqueID: Goal_Chill
+  ActiveAction: {fileID: 0}
+--- !u!114 &4157346813031373491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c7631ccc99d0e47bda4fa3428c91ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 75
+  UniqueID: Goal_RandWander
+  ActiveAction: {fileID: 0}
+--- !u!114 &1782441078635426612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13fb537b31606454aa7281585945d287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 0
+  UniqueID: Goal_SearchWater
+  ActiveAction: {fileID: 0}
+--- !u!114 &3080843240894537395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620c1946299c185418de90cc0cb9918a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 65
+  UniqueID: Goal_SearchFood
+  ActiveAction: {fileID: 0}
+--- !u!114 &5897010828785580082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8942243c9175fba46b5f32970afe278b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  CanSatisfy:
+  - Goal_SearchFood
+--- !u!114 &2991342183817395169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946f48839d102ce41a3b5036d6ce5b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  CanSatisfy:
+  - Goal_Chill
+--- !u!114 &7907609625751059300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f39192dd6545694081c08cc5b89f039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  CanSatisfy:
+  - Goal_RandWander
+--- !u!114 &7167684926933453078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8775a887a05d9f646b59605adc649d46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  CanSatisfy:
+  - Goal_SearchWater
 --- !u!1 &3945001799519832605
 GameObject:
   m_ObjectHideFlags: 0
