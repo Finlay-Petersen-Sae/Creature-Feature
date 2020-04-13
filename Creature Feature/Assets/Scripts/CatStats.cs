@@ -7,7 +7,7 @@ public class CatStats : MonoBehaviour
     public int maxHealth, maxHunger, maxThirst, Ferocity, Sturdiness, maxCleansliness;
     public int curHealth, curHunger, curThirst, curCleansliness;
     public string catName;
-    public GameObject closestfood;
+    //public GameObject closestfood;
     //Insert an identifier of some sort for personality
     private void Start()
     {
@@ -15,7 +15,7 @@ public class CatStats : MonoBehaviour
         maxHunger = 100;
         maxThirst = 100;
         maxCleansliness = 50;
-        ClosestFood();
+        //ClosestFood();
     }
 
     public void ClosestFood()
