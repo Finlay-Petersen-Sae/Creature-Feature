@@ -207,4 +207,21 @@ public class Character : MonoBehaviour
         }
         return idealwater.transform.position;
     }
+
+    public Vector3 ClosestHuman()
+    {
+        //TODO MAKE ONE FOR WATER TOO
+        float dist = 1000000f;
+        GameObject idealhuman = null;
+        foreach (var item in PDM.HumanObj)
+        {
+            if (Vector3.Distance(transform.position, item.transform.position) < dist)
+            {
+
+                idealhuman = item;
+                dist = Vector3.Distance(transform.position, item.transform.position);
+            }
+        }
+        return idealhuman.transform.position;
+    }
 }

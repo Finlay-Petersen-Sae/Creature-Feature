@@ -18,10 +18,12 @@ GameObject:
   - component: {fileID: 4157346813031373491}
   - component: {fileID: 1782441078635426612}
   - component: {fileID: 3080843240894537395}
+  - component: {fileID: 2783933954978354457}
   - component: {fileID: 5897010828785580082}
   - component: {fileID: 2991342183817395169}
   - component: {fileID: 7907609625751059300}
   - component: {fileID: 7167684926933453078}
+  - component: {fileID: 8099065347236093885}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -164,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c7631ccc99d0e47bda4fa3428c91ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Priority: 75
+  Priority: 0
   UniqueID: Goal_RandWander
   ActiveAction: {fileID: 0}
 --- !u!114 &1782441078635426612
@@ -194,8 +196,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620c1946299c185418de90cc0cb9918a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Priority: 65
+  Priority: 0
   UniqueID: Goal_SearchFood
+  ActiveAction: {fileID: 0}
+--- !u!114 &2783933954978354457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fda2e9e0461b404c941b34f9af10ee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 0
+  UniqueID: Goal_SearchHuman
   ActiveAction: {fileID: 0}
 --- !u!114 &5897010828785580082
 MonoBehaviour:
@@ -257,6 +274,21 @@ MonoBehaviour:
   Cost: 0
   CanSatisfy:
   - Goal_SearchWater
+--- !u!114 &8099065347236093885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e0949135700d64a879c4854eb79788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  CanSatisfy:
+  - Goal_SearchHuman
 --- !u!1 &3945001799519832605
 GameObject:
   m_ObjectHideFlags: 0

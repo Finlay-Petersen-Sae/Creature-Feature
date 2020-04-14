@@ -11,10 +11,12 @@ public class CatStats : MonoBehaviour
     //Insert an identifier of some sort for personality
     private void Start()
     {
+        var PDM = FindObjectOfType<PathDataManager>();
         maxHealth = Random.Range(10, 20);
         maxHunger = 100;
         maxThirst = 100;
         maxCleansliness = 50;
+        catName = PDM.catNames[Random.Range(0, PDM.catNames.Count)];
         ClosestFood();
     }
 

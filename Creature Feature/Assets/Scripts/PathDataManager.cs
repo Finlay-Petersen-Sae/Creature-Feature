@@ -7,6 +7,8 @@ public class PathDataManager : MonoBehaviour
     public List<PathDataNode> pathDataList = new List<PathDataNode>();
     public List<GameObject> FoodObj = new List<GameObject>();
     public List<GameObject> WaterObj = new List<GameObject>();
+    public List<GameObject> HumanObj = new List<GameObject>();
+    public List<string> catNames = new List<string>();
     public Vector2Int WorldSize;
 
     public void Start()
@@ -18,6 +20,10 @@ public class PathDataManager : MonoBehaviour
         foreach (var item in GameObject.FindGameObjectsWithTag("Water"))
         {
             WaterObj.Add(item);
+        }
+        foreach (var item in GameObject.FindGameObjectsWithTag("Human"))
+        {
+            HumanObj.Add(item);
         }
     }
 

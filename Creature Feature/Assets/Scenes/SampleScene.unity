@@ -276,6 +276,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FoodObj: []
+  WaterObj: []
+  HumanObj: []
+  catNames:
+  - Dax
+  - Abby
+  - Thor
+  - Mishca
+  - Jimmy
+  - Mooey
+  - Oscar
+  - Tiger
+  - Simba
+  - Kimba
+  - Chloe
+  - Coco
+  - Monty
+  - Thomas
+  - Casper
+  - Lucky
+  - Ginger
+  - Gizmo
+  - Fluffy
+  - Daisy
+  - Sylvester
+  - Minnie
+  - Tigger
+  - Shadow
+  - Smokey
+  - Max
+  - Jasper
+  - Billy
+  - Sophie
+  - Jack
   WorldSize: {x: 0, y: 0}
 --- !u!4 &607051897
 Transform:
