@@ -30,6 +30,7 @@ public class Character : MonoBehaviour
 
     public PathFinding Pathfinding;
     private PathDataManager PDM;
+    public Vector3 RefDestination;
 
     private void Start()
     {
@@ -130,10 +131,17 @@ public class Character : MonoBehaviour
         get
         {
             // Typically for this we do a 2D check
-            float distance2DSquared = Mathf.Pow(Destination.x - transform.position.x, 2) +
-                                      Mathf.Pow(Destination.z - transform.position.z, 2);
+            if (Destination != null)
+            {
+                float distance2DSquared = Mathf.Pow(Destination.x - transform.position.x, 2) +
+                                          Mathf.Pow(Destination.z - transform.position.z, 2);
 
-            return distance2DSquared < (DestinationThreshold * DestinationThreshold);
+                return distance2DSquared < (DestinationThreshold * DestinationThreshold);
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
@@ -160,6 +168,7 @@ public class Character : MonoBehaviour
 
         // set the new destination
         Destination = newDestination;
+        RefDestination = newDestination;
         HasDestination = true;
         CurrentPoint = 0;
 
@@ -170,7 +179,7 @@ public class Character : MonoBehaviour
         {
             HasDestination = false;
 
-            // TODO - let AI behaviours know that pathfinding failed
+            return;
         }
     }
 

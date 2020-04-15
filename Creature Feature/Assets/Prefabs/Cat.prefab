@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3932601010692350082}
   - component: {fileID: 2278017028785931293}
   - component: {fileID: 2245296246605684535}
-  - component: {fileID: 3420955400078995003}
   - component: {fileID: 7567706688176161277}
   - component: {fileID: 4157346813031373491}
   - component: {fileID: 1782441078635426612}
@@ -59,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881faa8ccd5c249f596419685c4e85b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Destination: {x: 0, y: 0, z: 0}
   DestinationThreshold: 0.1
   PointReachedThreshold: 1
   MaximumSpeed: 1
@@ -118,27 +118,6 @@ MonoBehaviour:
   curThirst: 0
   curCleansliness: 0
   catName: 
-  closestfood: {fileID: 0}
---- !u!114 &3420955400078995003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46688593295988084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 881faa8ccd5c249f596419685c4e85b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DestinationThreshold: 0.1
-  PointReachedThreshold: 1
-  MaximumSpeed: 1
-  Aggressiveness: 0.75
-  EnableAvoidance: 0
-  AvoidancePriority: 0.5
-  DEBUG_DrawPath: 1
-  Pathfinding: {fileID: 0}
 --- !u!114 &7567706688176161277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c7631ccc99d0e47bda4fa3428c91ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Priority: 0
+  Priority: 100
   UniqueID: Goal_RandWander
   ActiveAction: {fileID: 0}
 --- !u!114 &1782441078635426612

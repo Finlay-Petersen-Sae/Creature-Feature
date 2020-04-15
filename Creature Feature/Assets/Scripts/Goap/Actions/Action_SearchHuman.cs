@@ -19,7 +19,7 @@ public class Action_SearchHuman : ActionBase
     public override void RunAction()
     {
         var Character = GetComponent<Character>();
-        if (Character.ReachedDestination)
+        if (Character.ReachedDestination && Character.RefDestination == TargetLocation)
         {
             Reset();
         }
