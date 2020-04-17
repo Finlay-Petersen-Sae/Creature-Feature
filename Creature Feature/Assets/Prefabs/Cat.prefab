@@ -58,8 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881faa8ccd5c249f596419685c4e85b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Destination: {x: 0, y: 0, z: 0}
-  DestinationThreshold: 0.1
+  DestinationThreshold: 0.5
   PointReachedThreshold: 1
   MaximumSpeed: 1
   Aggressiveness: 0.8
@@ -67,6 +66,7 @@ MonoBehaviour:
   AvoidancePriority: 0.5
   DEBUG_DrawPath: 1
   Pathfinding: {fileID: 0}
+  RefDestination: {x: 0, y: 0, z: 0}
 --- !u!54 &3932601010692350082
 Rigidbody:
   m_ObjectHideFlags: 0

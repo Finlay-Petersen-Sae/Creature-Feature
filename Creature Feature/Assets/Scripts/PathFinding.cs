@@ -215,7 +215,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeNorthWest = PDM.GetNode(bestNode.Node.gridLocation + northwest);
-        if (nodeNorthWest != null && nodeNorthWest.type != PathDataNode.NodeType.UnPassable)
+        if (nodeNorthWest != null && nodeNorthWest.type != PathDataNode.NodeType.UnPassable && nodeNorth != null && nodeNorth.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeNorthWest))
             {
@@ -227,7 +227,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeNorthEast = PDM.GetNode(bestNode.Node.gridLocation + northeast);
-        if (nodeNorthEast != null && nodeNorthEast.type != PathDataNode.NodeType.UnPassable)
+        if (nodeNorthEast != null && nodeNorthEast.type != PathDataNode.NodeType.UnPassable && nodeNorth != null && nodeNorth.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeNorthEast))
             {
@@ -239,7 +239,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeSouthWest = PDM.GetNode(bestNode.Node.gridLocation + southwest);
-        if (nodeSouthWest != null && nodeSouthWest.type != PathDataNode.NodeType.UnPassable)
+        if (nodeSouthWest != null && nodeSouthWest.type != PathDataNode.NodeType.UnPassable && nodeSouth != null && nodeSouth.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeSouthWest))
             {
@@ -251,7 +251,7 @@ public class PathFinding : MonoBehaviour
             }
         }
         var nodeSouthEast = PDM.GetNode(bestNode.Node.gridLocation + southeast);
-        if (nodeSouthEast != null && nodeSouthEast.type != PathDataNode.NodeType.UnPassable)
+        if (nodeSouthEast != null && nodeSouthEast.type != PathDataNode.NodeType.UnPassable && nodeSouth != null && nodeSouth.type != PathDataNode.NodeType.UnPassable)
         {
             if (!ClosedListCheck(closedList, nodeSouthEast))
             {

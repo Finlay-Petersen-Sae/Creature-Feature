@@ -32,7 +32,7 @@ public class Action_RandWander : ActionBase
     public override void Reset()
     {
         // pick a location and reset the progress
-        TargetLocation = new Vector3(Random.Range(-2f, 2f), transform.position.y, Random.Range(-2f, 2f));
+        TargetLocation = new Vector3(Random.Range(-10f, 10f), transform.position.y, Random.Range(-10f, 10f));
     }
 
 }

@@ -205,7 +205,7 @@ public class Character : MonoBehaviour
         //TODO MAKE ONE FOR WATER TOO
         float dist = 1000000f;
         GameObject idealwater = null;
-        foreach (var item in PDM.FoodObj)
+        foreach (var item in PDM.WaterObj)
         {
             if (Vector3.Distance(transform.position, item.transform.position) < dist)
             {

@@ -16,8 +16,38 @@ public class CatStats : MonoBehaviour
         maxHunger = 100;
         maxThirst = 100;
         maxCleansliness = 50;
+        curHealth = maxHealth;
+        curHunger = maxHunger;
+        curThirst = maxThirst;
+        curCleansliness = maxCleansliness;
         catName = PDM.catNames[Random.Range(0, PDM.catNames.Count)];
         //ClosestFood();
+        StartCoroutine(LowerStats());
+    }
+
+    private IEnumerator LowerStats()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(2);
+
+            if (curHunger >= 0)
+            {
+                curHunger -= Random.Range(1, 6);
+            }
+            if (curThirst >= 0)
+            {
+                curThirst -= Random.Range(1, 6);
+            }
+            if (curCleansliness >= 0)
+            {
+                curCleansliness -= Random.Range(1, 3);
+            }
+            if(curHunger <= 25 || curThirst <= 25 || curCleansliness <= 10)
+            {
+                curHealth -= (Random.Range(1, 2));
+            }
+        }
     }
 
     //public void ClosestFood()
