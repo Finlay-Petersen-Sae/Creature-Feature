@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Goal_SearchWater : GoalBase
 {
+    public void Update()
+    {
+        Priority = Mathf.Clamp(Priority, 0, 100);
+        Priority = FindObjectOfType<CatStats>().curThirst;
+    }
     public override bool CanRun()
     {
         return base.CanRun();

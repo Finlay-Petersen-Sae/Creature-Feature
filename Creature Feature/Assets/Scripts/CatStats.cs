@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class CatStats : MonoBehaviour
 {
-    public int maxHealth, maxHunger, maxThirst, Ferocity, Sturdiness, maxCleansliness;
+    public int maxHealth, maxHunger, maxThirst, maxCleansliness;
     public int curHealth, curHunger, curThirst, curCleansliness;
+    public int Ferocity, Sturdiness, Survival, Friendliness;
+    public bool LookingForHuman = false;
     public string catName;
     //public GameObject closestfood;
     //Insert an identifier of some sort for personality
     private void Start()
     {
         var PDM = FindObjectOfType<PathDataManager>();
-        maxHealth = Random.Range(10, 20);
+        maxHealth = Random.Range(40, 60);
         maxHunger = 100;
         maxThirst = 100;
         maxCleansliness = 50;
         curHealth = maxHealth;
-        curHunger = maxHunger;
-        curThirst = maxThirst;
-        curCleansliness = maxCleansliness;
+        curHunger = 0;
+        curThirst = 0;
+        curCleansliness = 0;
         catName = PDM.catNames[Random.Range(0, PDM.catNames.Count)];
         //ClosestFood();
         StartCoroutine(LowerStats());
@@ -30,23 +32,40 @@ public class CatStats : MonoBehaviour
         while (true)
         {
             yield return new WaitForSecondsRealtime(2);
-
-            if (curHunger >= 0)
+            if (curHunger > 75 || curThirst > 75 || curCleansliness > 45)
             {
-                curHunger -= Random.Range(1, 6);
-            }
-            if (curThirst >= 0)
-            {
-                curThirst -= Random.Range(1, 6);
-            }
-            if (curCleansliness >= 0)
-            {
-                curCleansliness -= Random.Range(1, 3);
-            }
-            if(curHunger <= 25 || curThirst <= 25 || curCleansliness <= 10)
-            {
+                curHealth = Mathf.Clamp(curHealth, 0, maxHealth);
                 curHealth -= (Random.Range(1, 2));
             }
+            if (curHunger <= 100)
+            {
+                curHunger = Mathf.Clamp(curHunger, 0, maxHunger);
+                curHunger += Random.Range(1, 6);
+            }
+            if (curThirst <= 100)
+            {
+                curThirst = Mathf.Clamp(curThirst, 0, maxThirst);
+                curThirst += Random.Range(1, 6);
+            }
+            if (curCleansliness <= 50)
+            {
+                curCleansliness = Mathf.Clamp(curCleansliness, 0, maxCleansliness);
+                curCleansliness += Random.Range(1, 3);
+            }
+            if(curHealth <= 0)
+            {
+                Debug.Log("Dead cat");
+                FindObjectOfType<PathDataManager>().CatsObj.Remove(this.gameObject);
+                FindObjectOfType<PathDataManager>().curCatAmount--;
+                Destroy(this.gameObject);
+            }
+
+            var lookforhuman = Random.Range(0, 10);
+            if(lookforhuman >= 8 && !LookingForHuman)
+            {
+                LookingForHuman = true;
+            }
+            
         }
     }
 

@@ -18,14 +18,16 @@ GameObject:
   - component: {fileID: 1782441078635426612}
   - component: {fileID: 3080843240894537395}
   - component: {fileID: 2783933954978354457}
+  - component: {fileID: 2731343154672969835}
   - component: {fileID: 5897010828785580082}
   - component: {fileID: 2991342183817395169}
   - component: {fileID: 7907609625751059300}
   - component: {fileID: 7167684926933453078}
   - component: {fileID: 8099065347236093885}
-  m_Layer: 0
+  - component: {fileID: -5119173698895245991}
+  m_Layer: 9
   m_Name: Cat
-  m_TagString: Untagged
+  m_TagString: Cat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,13 +112,15 @@ MonoBehaviour:
   maxHealth: 0
   maxHunger: 0
   maxThirst: 0
-  Ferocity: 0
-  Sturdiness: 0
   maxCleansliness: 0
   curHealth: 0
   curHunger: 0
   curThirst: 0
   curCleansliness: 0
+  Ferocity: 0
+  Sturdiness: 0
+  Survival: 0
+  Friendliness: 0
   catName: 
 --- !u!114 &7567706688176161277
 MonoBehaviour:
@@ -193,6 +197,21 @@ MonoBehaviour:
   Priority: 0
   UniqueID: Goal_SearchHuman
   ActiveAction: {fileID: 0}
+--- !u!114 &2731343154672969835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69171a097ec734fa34094ab603fdbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 0
+  UniqueID: Goal_CleanSelf
+  ActiveAction: {fileID: 0}
 --- !u!114 &5897010828785580082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +287,21 @@ MonoBehaviour:
   Cost: 0
   CanSatisfy:
   - Goal_SearchHuman
+--- !u!114 &-5119173698895245991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46688593295988084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab58a9ecf8fd74042a0b6ba8c1a6c31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  CanSatisfy:
+  - Goal_CleanSelf
 --- !u!1 &3945001799519832605
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,7 +313,7 @@ GameObject:
   - component: {fileID: 2534752842814724860}
   - component: {fileID: 4895193177430725636}
   - component: {fileID: 356027281864762233}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +391,7 @@ GameObject:
   - component: {fileID: 6038130687950279611}
   - component: {fileID: 3279143653060425903}
   - component: {fileID: 7329493875071651742}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: cat_01_color05
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Goal_SearchHuman : GoalBase
 {
+    public void Update()
+    {
+        Priority = Mathf.Clamp(Priority, 0, 100);
+        if (GetComponent<CatStats>().LookingForHuman)
+        {
+            Priority = 100;
+        }
+    }
+
     public override bool CanRun()
     {
         return base.CanRun();

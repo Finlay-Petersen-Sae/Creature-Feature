@@ -5,10 +5,12 @@ using UnityEngine;
 public class Action_SearchFood : ActionBase
 {
     protected Vector3 TargetLocation;
+    private IEnumerator Eat;
 
     public override void WakeUp()
     {
         Reset();
+        Eat = WaitforFood();
     }
 
     public override void GoToSleep()
@@ -25,7 +27,25 @@ public class Action_SearchFood : ActionBase
         }
         else
         {
-            Character.SetDestination(TargetLocation);
+            if(Vector3.Distance(transform.position, TargetLocation) >= 0.5)
+            {
+                Character.SetDestination(TargetLocation);
+            }
+            else
+            {
+                StartCoroutine(Eat);
+            }
+
+        }
+    }
+
+    private IEnumerator WaitforFood()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(2);
+            FindObjectOfType<CatStats>().curHunger -= 40;
+            break;
         }
     }
 

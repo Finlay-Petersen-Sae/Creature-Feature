@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goal_SearchFood : GoalBase
+public class Goal_CleanSelf : GoalBase
 {
     public void Update()
     {
         Priority = Mathf.Clamp(Priority, 0, 100);
-        Priority = FindObjectOfType<CatStats>().curHunger;
+        Priority = FindObjectOfType<CatStats>().curCleansliness * 2; 
     }
     public override bool CanRun()
     {

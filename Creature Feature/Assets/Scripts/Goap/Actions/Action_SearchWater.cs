@@ -5,10 +5,12 @@ using UnityEngine;
 public class Action_SearchWater : ActionBase
 {
     protected Vector3 TargetLocation;
+    private IEnumerator Drink;
 
     public override void WakeUp()
     {
         Reset();
+        Drink = WaitforWater();
     }
 
     public override void GoToSleep()
@@ -25,7 +27,23 @@ public class Action_SearchWater : ActionBase
         }
         else
         {
-            Character.SetDestination(TargetLocation);
+            if (Vector3.Distance(transform.position, TargetLocation) >= 0.5)
+            {
+                Character.SetDestination(TargetLocation);
+            }
+            else
+            {
+                StartCoroutine(Drink);
+            }
+        }
+    }
+    private IEnumerator WaitforWater()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(2);
+            FindObjectOfType<CatStats>().curThirst -= 40;
+            break;
         }
     }
 

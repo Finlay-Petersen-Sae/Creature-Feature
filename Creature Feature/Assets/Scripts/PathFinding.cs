@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿    using System.Collections.Generic;
 using UnityEngine;
 
 public class PathFinding : MonoBehaviour
@@ -49,7 +49,7 @@ public class PathFinding : MonoBehaviour
         Vector3 spawnPoint = pathNode1.Node.worldLocation;
         var cat = Instantiate(Test_Cat, new Vector3(spawnPoint.x, 0.5f, spawnPoint.z), Quaternion.identity);
         var destinationset = cat.GetComponent<Character>();
-
+        PDM.CatsObj.Add(cat);
         //set a path node and then spawn a cat.
     }
 

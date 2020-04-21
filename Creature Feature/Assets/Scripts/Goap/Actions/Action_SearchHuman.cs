@@ -21,7 +21,18 @@ public class Action_SearchHuman : ActionBase
         var Character = GetComponent<Character>();
         if (Character.ReachedDestination && Character.RefDestination == TargetLocation)
         {
-            Reset();
+            var adoptionChance = Random.Range(0, 10);
+            if(adoptionChance >= 8)
+            {
+                GetComponent<PathDataManager>().CatsObj.Remove(this.gameObject);
+                GetComponent<CatStats>().LookingForHuman = false;
+                FindObjectOfType<PathDataManager>().curCatAmount--;
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                GetComponent<CatStats>().LookingForHuman = false;
+            }
         }
         else
         {

@@ -8,6 +8,8 @@ public class PathDataManager : MonoBehaviour
     public List<GameObject> FoodObj = new List<GameObject>();
     public List<GameObject> WaterObj = new List<GameObject>();
     public List<GameObject> HumanObj = new List<GameObject>();
+    public List<GameObject> CatsObj = new List<GameObject>();
+    public int CatLimit, curCatAmount;
     public List<string> catNames = new List<string>();
     public Vector2Int WorldSize;
 
@@ -24,6 +26,15 @@ public class PathDataManager : MonoBehaviour
         foreach (var item in GameObject.FindGameObjectsWithTag("Human"))
         {
             HumanObj.Add(item);
+        }
+    }
+
+    public void Update()
+    {
+        if(curCatAmount < CatLimit)
+        {
+            FindObjectOfType<PathFinding>().PathMake();
+            curCatAmount++;
         }
     }
 
