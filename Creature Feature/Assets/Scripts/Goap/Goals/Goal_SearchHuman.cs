@@ -11,6 +11,10 @@ public class Goal_SearchHuman : GoalBase
         {
             Priority = 100;
         }
+        else
+        {
+            Priority = 0;
+        }
     }
 
     public override bool CanRun()

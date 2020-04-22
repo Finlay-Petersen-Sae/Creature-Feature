@@ -60,8 +60,8 @@ public class CatStats : MonoBehaviour
                 Destroy(this.gameObject);
             }
 
-            var lookforhuman = Random.Range(0, 10);
-            if(lookforhuman >= 8 && !LookingForHuman)
+            var lookforhuman = Random.Range(0, 100);
+            if(lookforhuman >= 90 && !LookingForHuman)
             {
                 LookingForHuman = true;
             }
