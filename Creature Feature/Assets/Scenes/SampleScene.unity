@@ -218,7 +218,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: cf45259126710c44eb13bfc1c88159fd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.58
+      value: 9.96
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: cf45259126710c44eb13bfc1c88159fd,
         type: 3}
@@ -745,6 +745,8 @@ MonoBehaviour:
   WaterObj: []
   HumanObj: []
   CatsObj: []
+  PerlinSample: []
+  RnumberPerlin: []
   CatLimit: 15
   curCatAmount: 0
   catNames:

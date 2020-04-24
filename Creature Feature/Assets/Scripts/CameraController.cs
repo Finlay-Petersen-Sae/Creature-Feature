@@ -153,6 +153,14 @@ public class CameraController : MonoBehaviour
             UpdateCanvas();
         }
 
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            FindObjectOfType<PathDataManager>().WriteToSerialization();
+            SaveSystem.SaveData();
+        }
+     
+
         //else if (Input.GetKeyUp(KeyCode.Mouse1))
         //{
         //    StopLooking();

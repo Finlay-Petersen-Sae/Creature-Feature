@@ -7,8 +7,9 @@ public class CatStats : MonoBehaviour
     public int maxHealth, maxHunger, maxThirst, maxCleansliness;
     public int curHealth, curHunger, curThirst, curCleansliness;
     public int Ferocity, Sturdiness, Survival, Friendliness;
-    public bool LookingForHuman = false;
     public string catName;
+    public bool LookingForHuman = false;
+  
     //public GameObject closestfood;
     //Insert an identifier of some sort for personality
     private void Start()

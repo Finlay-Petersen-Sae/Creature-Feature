@@ -13,7 +13,17 @@ public class PerlinNoise : MonoBehaviour
 
     private void Awake()
     {
-        GenerateTexture();
+        FindObjectOfType<PathDataManager>().PerlinSample.Clear();
+        FindObjectOfType<PathDataManager>().RnumberPerlin.Clear();
+        //if (FindObjectOfType<BootStrap>() != null && FindObjectOfType<BootStrap>().IsLoadWorld)
+        //{
+        //    GenerateLoadWorld();
+        //}
+        //else
+        //{
+            GenerateTexture();
+        //}
+
         //calls it so generation is done before the camera renders
     }
 
@@ -82,8 +92,31 @@ public class PerlinNoise : MonoBehaviour
         //coalate and return a sample of the noise.
     }
 
-    void Generation(float noiseSample, float rNumber)
+    void GenerateLoadWorld()
     {
+        Serialization serialization = Serialization.GetInstance();
+        for (int x = 0; x < width; x += 5)
+        {
+            for (int y = 0; y < height; y += 5)
+            {
+                for (int i = 0; i < serialization.Perlinsample.Count; i++)
+                {
+                    for (int r = 0; r < serialization.RnumberPerlin.Count; r++)
+                    {
+                        xLoc = x;
+                        zLoc = y;
+                        Generation(i, r);
+                    }
+                }
+            }
+        }
+    }
+
+    void Generation(float noiseSample, float rNumber
+        )
+    {
+        FindObjectOfType<PathDataManager>().PerlinSample.Add(noiseSample);
+        FindObjectOfType<PathDataManager>().RnumberPerlin.Add(rNumber);
         float spawnLocx = xLoc - hypotenuse;
         float spawnLocz = zLoc - hypotenuse;
         //make it spawn in the right area
