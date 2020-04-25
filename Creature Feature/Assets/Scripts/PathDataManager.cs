@@ -19,7 +19,7 @@ public class PathDataManager : MonoBehaviour
 
     public void Start()
     {
-       
+        var bootStrap = FindObjectOfType<BootStrap>();
         foreach (var item in GameObject.FindGameObjectsWithTag("Food"))
         {
             FoodObj.Add(item);
@@ -32,7 +32,7 @@ public class PathDataManager : MonoBehaviour
         {
             HumanObj.Add(item);
         }
-        if (FindObjectOfType<BootStrap>().IsLoadWorld)
+        if (bootStrap.IsLoadWorld)
         {
             LoadCat();
         }
@@ -56,12 +56,10 @@ public class PathDataManager : MonoBehaviour
     public void LoadCat()
     {
         Serialization serialization = Serialization.GetInstance();
-
+        curCatAmount = serialization.CatStatsList.Count;
         for (int i = 0; i < serialization.CatStatsList.Count; i++)
         {
-            for (int l = 0; l < serialization.CatLoc.Count; l++)
-            {
-                var cat = Instantiate(GetComponent<PathFinding>().Test_Cat, new Vector3(serialization.CatLoc[l].x, serialization.CatLoc[l].y, serialization.CatLoc[l].z), Quaternion.identity);
+                var cat = Instantiate(GetComponent<PathFinding>().Test_Cat, new Vector3(serialization.CatLoc[i].x, serialization.CatLoc[i].y, serialization.CatLoc[i].z), Quaternion.identity);
                 var destinationset = cat.GetComponent<Character>();
                 cat.GetComponent<CatStats>().curHealth = serialization.CatStatsList[i].curHealth;
                 cat.GetComponent<CatStats>().curThirst = serialization.CatStatsList[i].curThirst;
@@ -73,8 +71,7 @@ public class PathDataManager : MonoBehaviour
                 cat.GetComponent<CatStats>().maxCleansliness = serialization.CatStatsList[i].maxCleansliness;
                 cat.GetComponent<CatStats>().catName = serialization.CatStatsList[i].catName;
                 CatsObj.Add(cat);
-                curCatAmount++;
-            }
+                
         }
        
     }
@@ -97,7 +94,12 @@ public class PathDataManager : MonoBehaviour
 
     public void WriteToSerialization()
     {
+
         Serialization serialization = Serialization.GetInstance();
+        serialization.Perlinsample.Clear();
+        serialization.RnumberPerlin.Clear();
+        serialization.CatLoc.Clear();
+        serialization.CatStatsList.Clear();
         serialization.Perlinsample = PerlinSample;
         serialization.RnumberPerlin = RnumberPerlin;
         foreach (var item in FindObjectOfType<PathDataManager>().CatsObj)
@@ -114,7 +116,7 @@ public class PathDataManager : MonoBehaviour
             CatStatsSaveData.catName = item.GetComponent<CatStats>().catName;
 
             serialization.CatStatsList.Add(CatStatsSaveData);
-            var position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z);
+            var position = new SaveableVector(item.transform.position.x, item.transform.position.y, item.transform.position.z);
             serialization.CatLoc.Add(position);
         }
     }

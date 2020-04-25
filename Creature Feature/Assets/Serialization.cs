@@ -20,20 +20,10 @@ public class Serialization
         return _instance;
     }
     public List<float> Perlinsample = new List<float>();
-    public List<Vector3> CatLoc = new List<Vector3>();
+    public List<SaveableVector> CatLoc = new List<SaveableVector>();
     public List<float> RnumberPerlin = new List<float>();
     public List<CatStatsData> CatStatsList = new List<CatStatsData>();
 
-    public void Awake()
-    {
-        Save();
-    }
-
-    public void Save()
-    {
-
-
-    }
 
     public void Load()
     {
