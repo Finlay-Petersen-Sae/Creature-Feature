@@ -50,6 +50,9 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private bool looking = true;
 
+    public GameObject PauseMenu;
+    public bool isPaused = false;
+
     [Header("Debug For Follow Camera")]
     public GameObject targetCat;
     public int curCatIndex;
@@ -59,6 +62,22 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         curCatIndex = Mathf.Clamp(curCatIndex, 0, FindObjectOfType<PathDataManager>().CatsObj.Count);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                PauseMenu.SetActive(false);
+                Time.timeScale = 1;
+                isPaused = false;
+            }
+            else
+            {
+                PauseMenu.SetActive(true);
+                Time.timeScale = 0;
+                isPaused = true;
+
+            }
+        }
         if (targetCat == null)
         {
             CatInfoCanvas.SetActive(false);
@@ -156,15 +175,22 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            FindObjectOfType<PathDataManager>().WriteToSerialization();
-            SaveSystem.SaveData();
+            Save();
         }
+
+     
      
 
         //else if (Input.GetKeyUp(KeyCode.Mouse1))
         //{
         //    StopLooking();
         //}
+    }
+
+    public void Save()
+    {
+        FindObjectOfType<PathDataManager>().WriteToSerialization();
+        SaveSystem.SaveData();
     }
 
     void UpdateCanvas()
