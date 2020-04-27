@@ -8,6 +8,7 @@ public class PerlinNoise : MonoBehaviour
     public GameObject[] SpawnableTiles;
     private Renderer renderer;
     public BootStrap bootstrap;
+    public PathDataManager PDM;
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class PerlinNoise : MonoBehaviour
     private void Start()
     {
         renderer = GetComponent<Renderer>();
-
+        PDM = FindObjectOfType<PathDataManager>();
         //CoalatePerlinNoise();
     }
 
@@ -106,8 +107,8 @@ public class PerlinNoise : MonoBehaviour
     private void Generation(float noiseSample, float rNumber
         )
     {
-        FindObjectOfType<PathDataManager>().PerlinSample.Add(noiseSample);
-        FindObjectOfType<PathDataManager>().RnumberPerlin.Add(rNumber);
+        PDM.PerlinSample.Add(noiseSample);
+        PDM.RnumberPerlin.Add(rNumber);
         float spawnLocx = xLoc - hypotenuse;
         float spawnLocz = zLoc - hypotenuse;
         //make it spawn in the right area

@@ -60,16 +60,16 @@ public class PathDataManager : MonoBehaviour
         for (int i = 0; i < serialization.CatStatsList.Count; i++)
         {
                 var cat = Instantiate(GetComponent<PathFinding>().Test_Cat, new Vector3(serialization.CatLoc[i].x, serialization.CatLoc[i].y, serialization.CatLoc[i].z), Quaternion.identity);
-                var destinationset = cat.GetComponent<Character>();
-                cat.GetComponent<CatStats>().curHealth = serialization.CatStatsList[i].curHealth;
-                cat.GetComponent<CatStats>().curThirst = serialization.CatStatsList[i].curThirst;
-                cat.GetComponent<CatStats>().curHunger = serialization.CatStatsList[i].curHunger;
-                cat.GetComponent<CatStats>().curCleansliness = serialization.CatStatsList[i].curCleansliness;
-                cat.GetComponent<CatStats>().maxHealth = serialization.CatStatsList[i].maxHealth;
-                cat.GetComponent<CatStats>().maxHunger = serialization.CatStatsList[i].maxHunger;
-                cat.GetComponent<CatStats>().maxThirst = serialization.CatStatsList[i].maxThirst;
-                cat.GetComponent<CatStats>().maxCleansliness = serialization.CatStatsList[i].maxCleansliness;
-                cat.GetComponent<CatStats>().catName = serialization.CatStatsList[i].catName;
+                var CatData = cat.GetComponent<CatStats>();
+                CatData.curHealth = serialization.CatStatsList[i].curHealth;
+                CatData.curThirst = serialization.CatStatsList[i].curThirst;
+                CatData.curHunger = serialization.CatStatsList[i].curHunger;
+                CatData.curCleansliness = serialization.CatStatsList[i].curCleansliness;
+                CatData.maxHealth = serialization.CatStatsList[i].maxHealth;
+                CatData.maxHunger = serialization.CatStatsList[i].maxHunger;
+                CatData.maxThirst = serialization.CatStatsList[i].maxThirst;
+                CatData.maxCleansliness = serialization.CatStatsList[i].maxCleansliness;
+                CatData.catName = serialization.CatStatsList[i].catName;
                 CatsObj.Add(cat);
                 
         }
@@ -105,15 +105,16 @@ public class PathDataManager : MonoBehaviour
         foreach (var item in FindObjectOfType<PathDataManager>().CatsObj)
         {
             var CatStatsSaveData = new CatStatsData();
-            CatStatsSaveData.maxHealth = item.GetComponent<CatStats>().maxHealth;
-            CatStatsSaveData.maxThirst = item.GetComponent<CatStats>().maxThirst;
-            CatStatsSaveData.maxHunger = item.GetComponent<CatStats>().maxHunger;
-            CatStatsSaveData.maxCleansliness = item.GetComponent<CatStats>().maxCleansliness;
-            CatStatsSaveData.curHealth = item.GetComponent<CatStats>().curHealth;
-            CatStatsSaveData.curThirst = item.GetComponent<CatStats>().curThirst;
-            CatStatsSaveData.curHunger = item.GetComponent<CatStats>().curHunger;
-            CatStatsSaveData.curCleansliness = item.GetComponent<CatStats>().curCleansliness;
-            CatStatsSaveData.catName = item.GetComponent<CatStats>().catName;
+            var Catstats = item.GetComponent<CatStats>();
+            CatStatsSaveData.maxHealth = Catstats.maxHealth;
+            CatStatsSaveData.maxThirst = Catstats.maxThirst;
+            CatStatsSaveData.maxHunger = Catstats.maxHunger;
+            CatStatsSaveData.maxCleansliness = Catstats.maxCleansliness;
+            CatStatsSaveData.curHealth = Catstats.curHealth;
+            CatStatsSaveData.curThirst = Catstats.curThirst;
+            CatStatsSaveData.curHunger = Catstats.curHunger;
+            CatStatsSaveData.curCleansliness = Catstats.curCleansliness;
+            CatStatsSaveData.catName = Catstats.catName;
 
             serialization.CatStatsList.Add(CatStatsSaveData);
             var position = new SaveableVector(item.transform.position.x, item.transform.position.y, item.transform.position.z);

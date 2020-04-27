@@ -52,6 +52,7 @@ public class CameraController : MonoBehaviour
 
     public GameObject PauseMenu;
     public bool isPaused = false;
+    private PathDataManager PDM;
 
     [Header("Debug For Follow Camera")]
     public GameObject targetCat;
@@ -59,9 +60,14 @@ public class CameraController : MonoBehaviour
     public GameObject CatInfoCanvas;
     public Text CatNameText, CatHealthText, CatHungerText, CatThirstText, CatCleanslinessText;
 
+    private void Start()
+    {
+        PDM = FindObjectOfType<PathDataManager>();
+    }
+
     void Update()
     {
-        curCatIndex = Mathf.Clamp(curCatIndex, 0, FindObjectOfType<PathDataManager>().CatsObj.Count);
+        curCatIndex = Mathf.Clamp(curCatIndex, 0, PDM.CatsObj.Count);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -145,7 +151,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
            
-            if (curCatIndex != FindObjectOfType<PathDataManager>().CatsObj.Count)
+            if (curCatIndex != PDM.CatsObj.Count)
             {
                 curCatIndex += 1;
             }
@@ -153,7 +159,7 @@ public class CameraController : MonoBehaviour
             {
                 curCatIndex = 0;
             }
-            targetCat = FindObjectOfType<PathDataManager>().CatsObj[curCatIndex];
+            targetCat = PDM.CatsObj[curCatIndex];
             UpdateCanvas();
 
         }
@@ -168,7 +174,7 @@ public class CameraController : MonoBehaviour
             {
                 curCatIndex = 9;
             }
-            targetCat = FindObjectOfType<PathDataManager>().CatsObj[curCatIndex];
+            targetCat = PDM.CatsObj[curCatIndex];
             UpdateCanvas();
         }
 
@@ -189,17 +195,17 @@ public class CameraController : MonoBehaviour
 
     public void Save()
     {
-        FindObjectOfType<PathDataManager>().WriteToSerialization();
+        PDM.WriteToSerialization();
         SaveSystem.SaveData();
     }
 
     void UpdateCanvas()
     {
-        CatNameText.text = "Name: " + FindObjectOfType<PathDataManager>().CatsObj[curCatIndex].GetComponent<CatStats>().catName;
-        CatHealthText.text = "Health: " + FindObjectOfType<PathDataManager>().CatsObj[curCatIndex].GetComponent<CatStats>().curHealth;
-        CatHungerText.text = "Hunger: " + FindObjectOfType<PathDataManager>().CatsObj[curCatIndex].GetComponent<CatStats>().curHunger;
-        CatThirstText.text = "Thirst: " + FindObjectOfType<PathDataManager>().CatsObj[curCatIndex].GetComponent<CatStats>().curThirst;
-        CatCleanslinessText.text = "Cleansliness: " + FindObjectOfType<PathDataManager>().CatsObj[curCatIndex].GetComponent<CatStats>().curCleansliness;
+        CatNameText.text = "Name: " + PDM.CatsObj[curCatIndex].GetComponent<CatStats>().catName;
+        CatHealthText.text = "Health: " + PDM.CatsObj[curCatIndex].GetComponent<CatStats>().curHealth;
+        CatHungerText.text = "Hunger: " + PDM.CatsObj[curCatIndex].GetComponent<CatStats>().curHunger;
+        CatThirstText.text = "Thirst: " + PDM.CatsObj[curCatIndex].GetComponent<CatStats>().curThirst;
+        CatCleanslinessText.text = "Cleansliness: " + PDM.CatsObj[curCatIndex].GetComponent<CatStats>().curCleansliness;
     }
 
     //void OnDisable()
